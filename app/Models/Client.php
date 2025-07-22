@@ -16,9 +16,10 @@ class Client extends User implements AccountType
     /** @use HasFactory<\Database\Factories\ClientFactory> */
     use HasApiTokens,HasFactory, Notifiable;
 
-    public ClientTiers $accountType{
+    public ClientTiers $accountType {
         get => $this->tier;
     }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -54,7 +55,7 @@ class Client extends User implements AccountType
         ];
     }
 
-    public function wallets() : HasMany
+    public function wallets(): HasMany
     {
         return $this->hasMany(wallet::class);
     }

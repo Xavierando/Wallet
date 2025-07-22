@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class WalletPolicy
 {
@@ -42,7 +41,7 @@ class WalletPolicy
             return true;
         }
 
-        if ($user->tokenCan(Abilities::ShowWallet) ) {
+        if ($user->tokenCan(Abilities::ShowWallet)) {
             return true;
         }
 

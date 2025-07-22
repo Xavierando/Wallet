@@ -1,11 +1,10 @@
 <?php
 
-use App\Enum\ClientTiers;
 use App\Models\Client;
 use App\Models\Emploie;
 use App\Permissions\V1\Abilities;
-use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
@@ -29,10 +28,10 @@ it('store a new wallet as a client', function () {
                 'relationship' => [
                     'client' => [
                         'data' => [
-                            'id' => $client->id
-                        ]
-                    ]
-                ]
+                            'id' => $client->id,
+                        ],
+                    ],
+                ],
             ],
         ]);
 
@@ -64,10 +63,10 @@ it('can not store a new wallet as a client with a different id', function () {
                 'relationships' => [
                     'client' => [
                         'data' => [
-                            'id' => $client->id
-                        ]
-                    ]
-                ]
+                            'id' => $client->id,
+                        ],
+                    ],
+                ],
             ],
         ]);
 
@@ -98,10 +97,10 @@ it('store a new wallet for a client as Emploie', function () {
                 'relationships' => [
                     'client' => [
                         'data' => [
-                            'id' => $client->id
-                        ]
-                    ]
-                ]
+                            'id' => $client->id,
+                        ],
+                    ],
+                ],
             ],
         ]);
 
@@ -133,10 +132,10 @@ it('can not store a new wallet for a client as Emploie', function () {
                 'relationship' => [
                     'client' => [
                         'data' => [
-                            'id' => $client->id
-                        ]
-                    ]
-                ]
+                            'id' => $client->id,
+                        ],
+                    ],
+                ],
             ],
         ]);
 

@@ -2,10 +2,6 @@
 
 namespace App\Http\Requests\Api\V1;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
-
 class WalletStoreRequest extends WalletRequest
 {
     /**
@@ -46,10 +42,10 @@ class WalletStoreRequest extends WalletRequest
         return [
             'data.attributes.title' => [
                 'description' => "The wallets's title (method)",
-                'example' => 'No-example'
+                'example' => 'No-example',
             ],
             'data.relationships.client.data.id' => [
-                'description' => "<optional> the wallet client id",
+                'description' => '<optional> the wallet client id',
                 'example' => 'No-example',
             ],
         ];

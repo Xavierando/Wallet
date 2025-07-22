@@ -9,31 +9,26 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-it('update a new wallet as a client', function () {
+it('delete a owned as a client', function () {
     $client = Client::Factory()->create();
-    $wallet = Wallet::Factory()->create(['client_id' => $client->id]);
+    $wallet = Wallet::Factory()->create(['client_id' => $client->id, 'amount' => 0]);
 
     Sanctum::actingAs(
         $client,
-        [Abilities::UpdateOwnWallet]
+        [Abilities::DeleteOwnWallet]
     );
 
     $response = $this
-        ->patchJson(route('apiv1.wallets.update', ['wallet' => $wallet->id]), [
-            'data' => [
-                'attributes' => [
-                    'title' => 'new awesom wallet',
-                ],
-            ],
-        ]);
+        ->deleteJson(route('apiv1.wallets.destroy', ['wallet' => $wallet->id]));
+
+    var_dump($response->json());
 
     $response
         ->assertStatus(200)
-        ->assertJsonPath('data.attributes.title', 'new awesom wallet')
-        ->assertJsonPath('data.relationships.client.data.id', $client->id);
+        ->assertJsonPath('message', 'wallet deleted');
 });
 
-it('can not update a own wallet as a client without permission', function () {
+it('can not delete a own wallet as a client without permission', function () {
     $client = Client::Factory()->create();
     $wallet = Wallet::Factory()->create(['client_id' => $client->id]);
 
@@ -57,7 +52,7 @@ it('can not update a own wallet as a client without permission', function () {
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('can not update a not own wallet as a client', function () {
+it('can not delete a not own wallet as a client', function () {
     $client = Client::Factory()->create();
     $wallet = Wallet::Factory()->create();
 
@@ -81,7 +76,7 @@ it('can not update a not own wallet as a client', function () {
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('can update a not own wallet as a emploie', function () {
+it('can delete a not own wallet as a emploie', function () {
     $emploie = Emploie::Factory()->create();
     $wallet = Wallet::Factory()->create();
 
@@ -105,7 +100,7 @@ it('can update a not own wallet as a emploie', function () {
         ->assertJsonPath('data.relationships.client.data.id', $wallet->client_id);
 });
 
-it('can not update a not own wallet as a emploie without permission', function () {
+it('can not delete a not own wallet as a emploie without permission', function () {
     $emploie = Emploie::Factory()->create();
     $wallet = Wallet::Factory()->create();
 
@@ -129,7 +124,7 @@ it('can not update a not own wallet as a emploie without permission', function (
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('can not update a new wallet amount as a client', function () {
+it('can not delete a wallet with a non-zero amount as a client', function () {
     $client = Client::Factory()->create();
     $wallet = Wallet::Factory()->create(['client_id' => $client->id]);
     $amount = $wallet->amount;
@@ -156,7 +151,7 @@ it('can not update a new wallet amount as a client', function () {
         ->assertJsonPath('data.relationships.client.data.id', $client->id);
 });
 
-it('can not update a new wallet amount as a emploie', function () {
+it('can not delete a wallet with a non-zero amount as a emploie', function () {
     $emploie = Emploie::Factory()->create();
     $wallet = Wallet::Factory()->create();
     $amount = $wallet->amount;

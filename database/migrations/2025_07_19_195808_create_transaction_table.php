@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Wallet::class,'from');
-            $table->foreignIdFor(Wallet::class,'to');
+            $table->foreignIdFor(Wallet::class, 'from');
+            $table->foreignIdFor(Wallet::class, 'to');
             $table->integer('amount');
             $table->timestamps();
         });

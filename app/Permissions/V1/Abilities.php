@@ -38,7 +38,6 @@ final class Abilities
             ];
         }
 
-
         if ($user->accountType == EmploiePositions::Normal || $user->accountType == EmploiePositions::Supervisor) {
             return [
                 self::ShowWallet,
@@ -47,6 +46,7 @@ final class Abilities
                 self::DeleteWallet,
             ];
         }
+
         return [];
     }
 }

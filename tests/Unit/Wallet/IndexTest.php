@@ -1,13 +1,12 @@
 <?php
 
-use App\Enum\ClientTiers;
 use App\Models\Client;
 use App\Models\Emploie;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
-use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
+use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
@@ -31,11 +30,9 @@ it('have visibility on own wallets as a client', function () {
     $response
         ->assertStatus(200)
         ->assertJson(
-            fn(AssertableJson $json) =>
-            $json->has('data', 2)
+            fn (AssertableJson $json) => $json->has('data', 2)
                 ->first(
-                    fn(AssertableJson $json) =>
-                    $json->where('0.relationships.client.data.id', $client->id)
+                    fn (AssertableJson $json) => $json->where('0.relationships.client.data.id', $client->id)
                         ->where('1.relationships.client.data.id', $client->id)
                         ->etc()
                 )->etc()
@@ -53,7 +50,6 @@ it('do not have visibility on not own wallets as a client', function () {
         [Abilities::ShowOwnWallet]
 
     );
-
 
     $response = $this
         ->getJson(route('apiv1.wallets.index'));
@@ -74,7 +70,6 @@ it('do not have visibility on wallets as a emploie without authorization', funct
         []
 
     );
-
 
     $response = $this
         ->getJson(route('apiv1.wallets.index'));
@@ -97,15 +92,13 @@ it('have visibility on wallets as a emploie with authorization', function () {
 
     );
 
-
     $response = $this
         ->getJson(route('apiv1.wallets.index'));
 
     $response
         ->assertStatus(200)
         ->assertJson(
-            fn(AssertableJson $json) =>
-            $json->has('data', 10)
+            fn (AssertableJson $json) => $json->has('data', 10)
                 ->etc()
         );
 });

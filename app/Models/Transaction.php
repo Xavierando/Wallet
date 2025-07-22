@@ -12,13 +12,13 @@ class Transaction extends Model
     /** @use HasFactory<\Database\Factories\TranfertFactory> */
     use HasFactory;
 
-    public function to() : BelongsTo
+    public function to(): BelongsTo
     {
-        return $this->belongsTo(Wallet::class,'to');
+        return $this->belongsTo(Wallet::class, 'to');
     }
 
-    public function from() : HasOne
+    public function from(): HasOne
     {
-        return $this->hasOne(Wallet::class,'from');
+        return $this->hasOne(Wallet::class, 'from');
     }
 }

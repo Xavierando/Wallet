@@ -15,11 +15,11 @@ class AuthController extends Controller
 {
     use ApiResponses;
 
-    public function getUserToken(LoginRequest $request,Client|Emploie $user)
+    public function getUserToken(LoginRequest $request, Client|Emploie $user)
     {
         $credential = $request->validated();
 
-        if($user && Hash::check($credential['password'], $user->password)){
+        if ($user && Hash::check($credential['password'], $user->password)) {
             return $this->ok(
                 'Authenticated',
                 [
@@ -33,7 +33,6 @@ class AuthController extends Controller
         }
 
         return $this->error('Invalid credentials', 401);
-
 
     }
 

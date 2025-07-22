@@ -20,24 +20,24 @@ class TransactionResource extends JsonResource
             'attributes' => [
                 'to' => $this->to,
                 'from' => $this->from,
-                'amount' => $this->amount/100,
+                'amount' => $this->amount / 100,
                 'createdAt' => $this->created_at,
-                'updatedAt' => $this->updated_at
+                'updatedAt' => $this->updated_at,
             ],
             'relationships' => [
                 'fromwallet' => [
                     'data' => [
                         'type' => 'wallet',
-                        'id' => $this->from
+                        'id' => $this->from,
                     ],
                 ],
                 'towallet' => [
                     'data' => [
                         'type' => 'wallet',
-                        'id' => $this->to
-                    ]
-                ]
-            ]
+                        'id' => $this->to,
+                    ],
+                ],
+            ],
         ];
     }
 }

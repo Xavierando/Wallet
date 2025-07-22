@@ -21,22 +21,22 @@ class WalletResource extends JsonResource
                 'title' => $this->title,
                 'amount' => $this->amount / 100,
                 'createdAt' => $this->created_at,
-                'updatedAt' => $this->updated_at
+                'updatedAt' => $this->updated_at,
             ],
             'relationships' => [
                 'client' => [
                     'data' => [
                         'type' => 'client',
-                        'id' => $this->client_id
-                    ]
-                ]
+                        'id' => $this->client_id,
+                    ],
+                ],
             ],
             'includes' => [
-                'transactions' => TransactionResource::collection($this->whenLoaded('transactions'))
+                'transactions' => TransactionResource::collection($this->whenLoaded('transactions')),
             ],
             'links' => [
-                'self' => route('apiv1.wallets.show', ['wallet' => $this->id])
-            ]
+                'self' => route('apiv1.wallets.show', ['wallet' => $this->id]),
+            ],
         ];
     }
 }

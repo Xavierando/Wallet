@@ -25,7 +25,6 @@ class Wallet extends Model
         return $this->BelongsTo(Client::class);
     }
 
-
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class, 'to');

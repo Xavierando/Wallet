@@ -23,7 +23,7 @@ class ClientResource extends JsonResource
                 'email_verified_at' => $this->email_verified_at,
                 'tier' => $this->tier,
                 'createdAt' => $this->created_at,
-                'updatedAt' => $this->updated_at
+                'updatedAt' => $this->updated_at,
             ],
             'includes' => new WalletResource($this->whenLoaded('wallet')),
         ];

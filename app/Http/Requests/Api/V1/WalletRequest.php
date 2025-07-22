@@ -9,7 +9,8 @@ class WalletRequest extends FormRequest
     /**
      * map the attributes of the request to model fields
      */
-    public function mappedAttributes(array $otherAttributes = []) {
+    public function mappedAttributes(array $otherAttributes = [])
+    {
         $attributeMap = array_merge([
             'data.attributes.title' => 'title',
             'data.attributes.createdAt' => 'created_at',

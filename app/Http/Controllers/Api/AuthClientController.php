@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginRequest;
 use App\Models\Client;
-use App\Permissions\V1\Abilities;
 use App\Traits\ApiResponses;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthClientController extends AuthController
 {
@@ -28,8 +23,7 @@ class AuthClientController extends AuthController
      */
     public function getToken(LoginRequest $request)
     {
-        return $this->getUserToken($request , Client::firstWhere('email', $request->safe()->email));
-
+        return $this->getUserToken($request, Client::firstWhere('email', $request->safe()->email));
 
     }
 }

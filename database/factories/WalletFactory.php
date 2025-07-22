@@ -18,8 +18,8 @@ class WalletFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->words(2,true),
-            'amount' => fake()->numberBetween(-100000,1000000),
+            'title' => fake()->words(2, true),
+            'amount' => fake()->numberBetween(-100000, 1000000),
             'client_id' => Client::factory(),
         ];
     }

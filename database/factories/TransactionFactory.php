@@ -20,7 +20,7 @@ class TransactionFactory extends Factory
         return [
             'from' => Wallet::inRandomOrder()->first(),
             'to' => Wallet::inRandomOrder()->first(),
-            'amount' => fake()->numberBetween(1,10000),
+            'amount' => fake()->numberBetween(1, 10000),
         ];
     }
 }

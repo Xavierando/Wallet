@@ -9,7 +9,7 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-it('delete a owned as a client', function () {
+it('delete a owned wallet as a client', function () {
     $client = Client::Factory()->create();
     $wallet = Wallet::Factory()->create(['client_id' => $client->id, 'amount' => 0]);
 
@@ -21,8 +21,6 @@ it('delete a owned as a client', function () {
     $response = $this
         ->deleteJson(route('apiv1.wallets.destroy', ['wallet' => $wallet->id]));
 
-    var_dump($response->json());
-
     $response
         ->assertStatus(200)
         ->assertJsonPath('message', 'wallet deleted');
@@ -30,7 +28,7 @@ it('delete a owned as a client', function () {
 
 it('can not delete a own wallet as a client without permission', function () {
     $client = Client::Factory()->create();
-    $wallet = Wallet::Factory()->create(['client_id' => $client->id]);
+    $wallet = Wallet::Factory()->create(['client_id' => $client->id, 'amount' => 0]);
 
     Sanctum::actingAs(
         $client,
@@ -38,13 +36,7 @@ it('can not delete a own wallet as a client without permission', function () {
     );
 
     $response = $this
-        ->patchJson(route('apiv1.wallets.update', ['wallet' => $wallet->id]), [
-            'data' => [
-                'attributes' => [
-                    'title' => 'new awesom wallet',
-                ],
-            ],
-        ]);
+        ->deleteJson(route('apiv1.wallets.destroy', ['wallet' => $wallet->id]));
 
     $response
         ->assertStatus(200)
@@ -58,17 +50,11 @@ it('can not delete a not own wallet as a client', function () {
 
     Sanctum::actingAs(
         $client,
-        [Abilities::UpdateOwnWallet]
+        [Abilities::DeleteOwnWallet]
     );
 
     $response = $this
-        ->patchJson(route('apiv1.wallets.update', ['wallet' => $wallet->id]), [
-            'data' => [
-                'attributes' => [
-                    'title' => 'new awesom wallet',
-                ],
-            ],
-        ]);
+        ->deleteJson(route('apiv1.wallets.destroy', ['wallet' => $wallet->id]));
 
     $response
         ->assertStatus(200)
@@ -78,31 +64,24 @@ it('can not delete a not own wallet as a client', function () {
 
 it('can delete a not own wallet as a emploie', function () {
     $emploie = Emploie::Factory()->create();
-    $wallet = Wallet::Factory()->create();
+    $wallet = Wallet::Factory()->create(['amount' => 0]);
 
     Sanctum::actingAs(
         $emploie,
-        [Abilities::UpdateWallet]
+        [Abilities::DeleteWallet]
     );
 
     $response = $this
-        ->patchJson(route('apiv1.wallets.update', ['wallet' => $wallet->id]), [
-            'data' => [
-                'attributes' => [
-                    'title' => 'new awesom wallet',
-                ],
-            ],
-        ]);
+        ->deleteJson(route('apiv1.wallets.destroy', ['wallet' => $wallet->id]));
 
     $response
         ->assertStatus(200)
-        ->assertJsonPath('data.attributes.title', 'new awesom wallet')
-        ->assertJsonPath('data.relationships.client.data.id', $wallet->client_id);
+        ->assertJsonPath('message', 'wallet deleted');
 });
 
 it('can not delete a not own wallet as a emploie without permission', function () {
     $emploie = Emploie::Factory()->create();
-    $wallet = Wallet::Factory()->create();
+    $wallet = Wallet::Factory()->create(['amount' => 0]);
 
     Sanctum::actingAs(
         $emploie,
@@ -110,13 +89,7 @@ it('can not delete a not own wallet as a emploie without permission', function (
     );
 
     $response = $this
-        ->patchJson(route('apiv1.wallets.update', ['wallet' => $wallet->id]), [
-            'data' => [
-                'attributes' => [
-                    'title' => 'new awesom wallet',
-                ],
-            ],
-        ]);
+        ->deleteJson(route('apiv1.wallets.destroy', ['wallet' => $wallet->id]));
 
     $response
         ->assertStatus(200)
@@ -126,54 +99,36 @@ it('can not delete a not own wallet as a emploie without permission', function (
 
 it('can not delete a wallet with a non-zero amount as a client', function () {
     $client = Client::Factory()->create();
-    $wallet = Wallet::Factory()->create(['client_id' => $client->id]);
-    $amount = $wallet->amount;
+    $wallet = Wallet::Factory()->create(['client_id' => $client->id, 'amount' => 10000]);
 
     Sanctum::actingAs(
         $client,
-        [Abilities::UpdateOwnWallet]
+        [Abilities::DeleteOwnWallet]
     );
 
     $response = $this
-        ->patchJson(route('apiv1.wallets.update', ['wallet' => $wallet->id]), [
-            'data' => [
-                'attributes' => [
-                    'title' => 'new awesom wallet',
-                    'amount' => 1500000,
-                ],
-            ],
-        ]);
+        ->deleteJson(route('apiv1.wallets.destroy', ['wallet' => $wallet->id]));
 
     $response
         ->assertStatus(200)
-        ->assertJsonPath('data.attributes.title', 'new awesom wallet')
-        ->assertJsonPath('data.attributes.amount', $amount / 100)
-        ->assertJsonPath('data.relationships.client.data.id', $client->id);
+        ->assertJsonPath('errors.status', 401)
+        ->assertJsonPath('errors.message', 'Can\'t delete a wallet with a non-zero amount');
 });
 
 it('can not delete a wallet with a non-zero amount as a emploie', function () {
     $emploie = Emploie::Factory()->create();
-    $wallet = Wallet::Factory()->create();
-    $amount = $wallet->amount;
+    $wallet = Wallet::Factory()->create(['amount' => 10000]);
 
     Sanctum::actingAs(
         $emploie,
-        [Abilities::UpdateWallet]
+        [Abilities::DeleteWallet]
     );
 
     $response = $this
-        ->patchJson(route('apiv1.wallets.update', ['wallet' => $wallet->id]), [
-            'data' => [
-                'attributes' => [
-                    'title' => 'new awesom wallet',
-                    'amount' => 1500000,
-                ],
-            ],
-        ]);
+        ->deleteJson(route('apiv1.wallets.destroy', ['wallet' => $wallet->id]));
 
     $response
         ->assertStatus(200)
-        ->assertJsonPath('data.attributes.title', 'new awesom wallet')
-        ->assertJsonPath('data.attributes.amount', $amount / 100)
-        ->assertJsonPath('data.relationships.client.data.id', $wallet->client_id);
+        ->assertJsonPath('errors.status', 401)
+        ->assertJsonPath('errors.message', 'Can\'t delete a wallet with a non-zero amount');
 });

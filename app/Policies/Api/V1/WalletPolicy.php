@@ -82,7 +82,7 @@ class WalletPolicy
         return false;
     }
 
-    public function delete(User $user, $wallet)
+    public function destroy(User $user, $wallet)
     {
         if ($user->tokenCan(Abilities::DeleteWallet)) {
             return true;

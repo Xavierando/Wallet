@@ -32,7 +32,7 @@ class WalletResource extends JsonResource
                 ],
             ],
             'includes' => [
-                'transactions' => TransactionResource::collection($this->whenLoaded('transactions')),
+                'transactions' => TransactionResource::collection($this->transactions()),
             ],
             'links' => [
                 'self' => route('apiv1.wallets.show', ['wallet' => $this->id]),

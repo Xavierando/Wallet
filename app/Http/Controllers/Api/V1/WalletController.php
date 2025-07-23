@@ -72,14 +72,12 @@ class WalletController extends ApiController
      *
      * @group Wallets
      *
-     * @urlParam wallet_id integer required The wallet's ID. No-example
-     *
      * @response {"data":{"id":1,"attributes":{"title":"new wallet","amount":0},"relationships":{"client":{"data":{"id":1}}}}}
      */
     public function show(Wallet $wallet)
     {
         if ($this->isAbleTo('show', [$wallet])) {
-            return new WalletResource($wallet->load('transactions'));
+            return new WalletResource($wallet);
         }
 
         return $this->notAuthorized('Unauthorized');
@@ -91,8 +89,6 @@ class WalletController extends ApiController
      * @authenticated
      *
      * @group Wallets
-     *
-     * @urlParam wallet_id integer required The wallet's ID. No-example
      *
      * @request {"data":{"attributes":{"title":"new wallet"}}}
      */
@@ -113,8 +109,6 @@ class WalletController extends ApiController
      * @authenticated
      *
      * @group Wallets
-     *
-     * @urlParam wallet_id integer required The wallet's ID. No-example
      */
     public function destroy(Wallet $wallet)
     {
@@ -124,7 +118,7 @@ class WalletController extends ApiController
 
                 return $this->ok('wallet deleted');
             } else {
-                return $this->notAuthorized('Can\'t delete a wallet with a non-zero ammount');
+                return $this->notAuthorized('Can\'t delete a wallet with a non-zero amount');
             }
         }
 

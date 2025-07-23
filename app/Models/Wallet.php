@@ -25,14 +25,9 @@ class Wallet extends Model
         return $this->BelongsTo(Client::class);
     }
 
-    public function transactions(): HasMany
+    public function transactions(): Collection
     {
-        return $this->hasMany(Transaction::class, 'to');
-    }
-    /*
-    private function Transactions(): Collection
-    {
-        return Transaction::where('to', $this->id)->orWhere('from', $this->id);
+        return Transaction::where('to',$this->id)->orWhere('from',$this->id)->get();
     }
 
     /**

@@ -25,6 +25,10 @@ final class Abilities
 
     public const DeleteWallet = 'wallet:delete';
 
+    public const ShowOwnTransaction = 'transaction:own:show';
+
+    public const ShowTransaction = 'transaction:show';
+
     public const CreateOwnTransaction = 'transaction:own:create';
 
     public static function getAbilities(Client|Emploie $user)

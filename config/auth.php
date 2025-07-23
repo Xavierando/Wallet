@@ -42,6 +42,7 @@ return [
         ],
         'api' => [
             'driver' => 'token',
+            'provider' => 'user',
         ],
     ],
 
@@ -67,9 +68,9 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\Client::class),
         ],
-        'emploies' => [
+        'user' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Emploie::class),
+            'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
         // 'users' => [

@@ -39,8 +39,10 @@ class AuthController extends Controller
     /**
      * Logout
      *
-     * Signs out the user and destroy's the API token.
+     * destroy's the API token.
      *
+     * @authenticated
+     * 
      * @group Authentication
      *
      * @response 200 {}

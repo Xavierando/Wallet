@@ -13,11 +13,13 @@ class AuthClientController extends AuthController
     /**
      * Login
      *
-     * Authenticates the client and returns the client's API token.
+     * Authenticates the client and returns a client's API token.
      *
      * @unauthenticated
      *
      * @group Authentication
+     * 
+     * @request {"email":"myemail@test.tst","password":"mypassword"}
      *
      * @response 200 {"data": {"token": "{YOUR_AUTH_KEY}"},"message": "Authenticated","status": 200}
      */

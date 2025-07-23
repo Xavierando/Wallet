@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthClientController;
 use App\Http\Controllers\Api\AuthEmploieController;
+use App\Http\Controllers\Api\V1\TransactionController;
 use App\Http\Controllers\Api\V1\WalletController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,4 +14,5 @@ Route::delete('/emploie/token', [AuthEmploieController::class, 'deleteToken'])->
 
 Route::name('apiv1.')->middleware('auth:sanctum')->group(function () {
     Route::apiResource('wallets', WalletController::class);
+    Route::apiResource('transactions', TransactionController::class)->only(['index','store','show']);
 });

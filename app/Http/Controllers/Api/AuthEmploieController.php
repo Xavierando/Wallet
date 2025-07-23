@@ -13,7 +13,7 @@ class AuthEmploieController extends AuthController
     /**
      * Login
      *
-     * Authenticates the user and returns the user's API token.
+     * Authenticates the emploie and returns a user's API token.
      *
      * @unauthenticated
      *

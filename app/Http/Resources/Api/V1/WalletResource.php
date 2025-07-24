@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources\Api\V1;
 
+use App\Permissions\V1\Abilities;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class WalletResource extends JsonResource
 {
@@ -32,7 +34,11 @@ class WalletResource extends JsonResource
                 ],
             ],
             'includes' => [
-                'transactions' => TransactionResource::collection($this->transactions()),
+                'transactions' => $this->when(
+                    (str_contains($request->input('includes'), 'transactions')
+                        && Auth::user()->tokenCan(Abilities::ShowTransaction)),
+                    TransactionResource::collection($this->transactions())
+                ),
             ],
             'links' => [
                 'self' => route('apiv1.wallets.show', ['wallet' => $this->id]),

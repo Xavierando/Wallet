@@ -90,14 +90,14 @@
                     <a href="#transactions">Transactions</a>
                 </li>
                                     <ul id="tocify-subheader-transactions" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="transactions-GETapi-transactions">
-                                <a href="#transactions-GETapi-transactions">Display a listing of the resource.</a>
+                                                    <li class="tocify-item level-2" data-unique="transactions-GETapi-wallets--wallet_id--transactions">
+                                <a href="#transactions-GETapi-wallets--wallet_id--transactions">Display a listing of the resource.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="transactions-POSTapi-transactions">
-                                <a href="#transactions-POSTapi-transactions">Store a newly created resource in storage.</a>
+                                                                                <li class="tocify-item level-2" data-unique="transactions-POSTapi-wallets--wallet_id--transactions">
+                                <a href="#transactions-POSTapi-wallets--wallet_id--transactions">Store a newly created resource in storage.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="transactions-GETapi-transactions--id-">
-                                <a href="#transactions-GETapi-transactions--id-">Display the specified resource.</a>
+                                                                                <li class="tocify-item level-2" data-unique="transactions-GETapi-wallets--wallet_id--transactions--id-">
+                                <a href="#transactions-GETapi-wallets--wallet_id--transactions--id-">Display the specified resource.</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -132,7 +132,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 23, 2025</li>
+        <li>Last updated: July 24, 2025</li>
     </ul>
 </div>
 
@@ -151,7 +151,7 @@ You can switch the language used with the tabs at the top right (or from the nav
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>To authenticate requests, include an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
 <p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
-<p>You can retrieve your token from the /login endpoint</p>
+<p>You can retrieve your token from the /token endpoint</p>
 
         <h1 id="authentication">Authentication</h1>
 
@@ -162,7 +162,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 <p>
 </p>
 
-<p>Authenticates the client and returns the client's API token.</p>
+<p>Authenticates the client and returns a client's API token.</p>
 
 <span id="example-requests-POSTapi-token">
 <blockquote>Example request:</blockquote>
@@ -446,7 +446,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>
 </p>
 
-<p>Authenticates the emploie and returns the user's API token.</p>
+<p>Authenticates the emploie and returns a user's API token.</p>
 
 <span id="example-requests-POSTapi-emploie-token">
 <blockquote>Example request:</blockquote>
@@ -729,7 +729,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
     
 
-                                <h2 id="transactions-GETapi-transactions">Display a listing of the resource.</h2>
+                                <h2 id="transactions-GETapi-wallets--wallet_id--transactions">Display a listing of the resource.</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -737,13 +737,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-GETapi-transactions">
+<span id="example-requests-GETapi-wallets--wallet_id--transactions">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/transactions?sort=sort%3Dtitle%2C-createdAt&amp;filter%5Bamount%5D=architecto&amp;filter%5Bto%5D=1&amp;filter%5Bfrom%5D=2" \
+    --get "http://localhost:8000/api/wallets/2/transactions?sort=sort%3Dtitle%2C-createdAt&amp;filter%5Bamount%5D=architecto&amp;filter%5Bto%5D=1&amp;filter%5Bfrom%5D=2" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -751,7 +751,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/transactions"
+    "http://localhost:8000/api/wallets/2/transactions"
 );
 
 const params = {
@@ -776,52 +776,112 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-transactions">
+<span id="example-responses-GETapi-wallets--wallet_id--transactions">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
                 <pre>
 
-<code class="language-json" style="max-height: 300px;">{&quot;data&quot;:[{&quot;id&quot;:1,&quot;attributes&quot;:{&quot;from&quot;:1,&quot;to&quot;:2,&quot;amount&quot;:10}]},&quot;relationships&quot;:{&quot;fromwallet&quot;:{&quot;data&quot;:{&quot;type&quot;:wallet,&quot;id&quot;:1}},&quot;towallet&quot;:{&quot;data&quot;:{&quot;type&quot;:wallet,&quot;id&quot;:2}}}}}</code>
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;type&quot;: &quot;transaction&quot;,
+            &quot;id&quot;: 1,
+            &quot;attributes&quot;: {
+                &quot;to&quot;: 39,
+                &quot;from&quot;: 47,
+                &quot;amount&quot;: 7.72,
+                &quot;createdAt&quot;: &quot;2025-07-21T12:43:17.000000Z&quot;,
+                &quot;updatedAt&quot;: &quot;2025-07-21T12:43:17.000000Z&quot;
+            },
+            &quot;relationships&quot;: {
+                &quot;fromwallet&quot;: {
+                    &quot;data&quot;: {
+                        &quot;type&quot;: &quot;wallet&quot;,
+                        &quot;id&quot;: 47
+                    }
+                },
+                &quot;towallet&quot;: {
+                    &quot;data&quot;: {
+                        &quot;type&quot;: &quot;wallet&quot;,
+                        &quot;id&quot;: 39
+                    }
+                }
+            }
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;http://127.0.0.1/api/wallets/47/transactions?page=1&quot;,
+        &quot;last&quot;: &quot;http://127.0.0.1/api/wallets/47/transactions?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;http://127.0.0.1/api/wallets/47/transactions?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;http://127.0.0.1/api/wallets/47/transactions&quot;,
+        &quot;per_page&quot;: 15,
+        &quot;to&quot;: 1,
+        &quot;total&quot;: 1
+    }
+}</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-transactions" hidden>
+<span id="execution-results-GETapi-wallets--wallet_id--transactions" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-transactions"></span>:
+                id="execution-response-status-GETapi-wallets--wallet_id--transactions"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-transactions"
+    <pre class="json"><code id="execution-response-content-GETapi-wallets--wallet_id--transactions"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETapi-transactions" hidden>
+<span id="execution-error-GETapi-wallets--wallet_id--transactions" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-transactions">
+    <pre><code id="execution-error-message-GETapi-wallets--wallet_id--transactions">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETapi-transactions" data-method="GET"
-      data-path="api/transactions"
+<form id="form-GETapi-wallets--wallet_id--transactions" data-method="GET"
+      data-path="api/wallets/{wallet_id}/transactions"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-transactions', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-wallets--wallet_id--transactions', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-transactions"
-                    onclick="tryItOut('GETapi-transactions');">Try it out ⚡
+                    id="btn-tryout-GETapi-wallets--wallet_id--transactions"
+                    onclick="tryItOut('GETapi-wallets--wallet_id--transactions');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-transactions"
-                    onclick="cancelTryOut('GETapi-transactions');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-wallets--wallet_id--transactions"
+                    onclick="cancelTryOut('GETapi-wallets--wallet_id--transactions');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-transactions"
+                    id="btn-executetryout-GETapi-wallets--wallet_id--transactions"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -829,7 +889,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/transactions</code></b>
+            <b><code>api/wallets/{wallet_id}/transactions</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -837,7 +897,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-transactions"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-wallets--wallet_id--transactions"
                value="Bearer {YOUR_AUTH_KEY}"
                data-component="header">
     <br>
@@ -848,7 +908,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-transactions"
+                              name="Content-Type"                data-endpoint="GETapi-wallets--wallet_id--transactions"
                value="application/json"
                data-component="header">
     <br>
@@ -859,19 +919,31 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-transactions"
+                              name="Accept"                data-endpoint="GETapi-wallets--wallet_id--transactions"
                value="application/json"
                data-component="header">
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>wallet_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="wallet_id"                data-endpoint="GETapi-wallets--wallet_id--transactions"
+               value="2"
+               data-component="url">
+    <br>
+<p>The ID of the wallet. Example: <code>2</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>sort</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
-                              name="sort"                data-endpoint="GETapi-transactions"
+                              name="sort"                data-endpoint="GETapi-wallets--wallet_id--transactions"
                value="sort=title,-createdAt"
                data-component="query">
     <br>
@@ -882,7 +954,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
-                              name="filter[amount]"                data-endpoint="GETapi-transactions"
+                              name="filter[amount]"                data-endpoint="GETapi-wallets--wallet_id--transactions"
                value="architecto"
                data-component="query">
     <br>
@@ -893,7 +965,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
-                              name="filter[to]"                data-endpoint="GETapi-transactions"
+                              name="filter[to]"                data-endpoint="GETapi-wallets--wallet_id--transactions"
                value="1"
                data-component="query">
     <br>
@@ -904,7 +976,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
-                              name="filter[from]"                data-endpoint="GETapi-transactions"
+                              name="filter[from]"                data-endpoint="GETapi-wallets--wallet_id--transactions"
                value="2"
                data-component="query">
     <br>
@@ -912,7 +984,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                 </form>
 
-                    <h2 id="transactions-POSTapi-transactions">Store a newly created resource in storage.</h2>
+                    <h2 id="transactions-POSTapi-wallets--wallet_id--transactions">Store a newly created resource in storage.</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -920,13 +992,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-POSTapi-transactions">
+<span id="example-requests-POSTapi-wallets--wallet_id--transactions">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/transactions" \
+    "http://localhost:8000/api/wallets/2/transactions" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -934,7 +1006,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/transactions"
+    "http://localhost:8000/api/wallets/2/transactions"
 );
 
 const headers = {
@@ -950,52 +1022,78 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-POSTapi-transactions">
+<span id="example-responses-POSTapi-wallets--wallet_id--transactions">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
                 <pre>
 
-<code class="language-json" style="max-height: 300px;">{&quot;data&quot;:{&quot;id&quot;:1,&quot;attributes&quot;:{&quot;from&quot;:1,&quot;to&quot;:2,&quot;amount&quot;:10}},&quot;relationships&quot;:{&quot;fromwallet&quot;:{&quot;data&quot;:{&quot;type&quot;:wallet,&quot;id&quot;:1}},&quot;towallet&quot;:{&quot;data&quot;:{&quot;type&quot;:wallet,&quot;id&quot;:2}}}}}</code>
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;type&quot;: &quot;transaction&quot;,
+        &quot;id&quot;: 1,
+        &quot;attributes&quot;: {
+            &quot;to&quot;: 39,
+            &quot;from&quot;: 47,
+            &quot;amount&quot;: 7.72,
+            &quot;createdAt&quot;: &quot;2025-07-21T12:43:17.000000Z&quot;,
+            &quot;updatedAt&quot;: &quot;2025-07-21T12:43:17.000000Z&quot;
+        },
+        &quot;relationships&quot;: {
+            &quot;fromwallet&quot;: {
+                &quot;data&quot;: {
+                    &quot;type&quot;: &quot;wallet&quot;,
+                    &quot;id&quot;: 47
+                }
+            },
+            &quot;towallet&quot;: {
+                &quot;data&quot;: {
+                    &quot;type&quot;: &quot;wallet&quot;,
+                    &quot;id&quot;: 39
+                }
+            }
+        }
+    }
+}</code>
  </pre>
     </span>
-<span id="execution-results-POSTapi-transactions" hidden>
+<span id="execution-results-POSTapi-wallets--wallet_id--transactions" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-POSTapi-transactions"></span>:
+                id="execution-response-status-POSTapi-wallets--wallet_id--transactions"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-transactions"
+    <pre class="json"><code id="execution-response-content-POSTapi-wallets--wallet_id--transactions"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTapi-transactions" hidden>
+<span id="execution-error-POSTapi-wallets--wallet_id--transactions" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-transactions">
+    <pre><code id="execution-error-message-POSTapi-wallets--wallet_id--transactions">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-POSTapi-transactions" data-method="POST"
-      data-path="api/transactions"
+<form id="form-POSTapi-wallets--wallet_id--transactions" data-method="POST"
+      data-path="api/wallets/{wallet_id}/transactions"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-transactions', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-wallets--wallet_id--transactions', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-transactions"
-                    onclick="tryItOut('POSTapi-transactions');">Try it out ⚡
+                    id="btn-tryout-POSTapi-wallets--wallet_id--transactions"
+                    onclick="tryItOut('POSTapi-wallets--wallet_id--transactions');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-transactions"
-                    onclick="cancelTryOut('POSTapi-transactions');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTapi-wallets--wallet_id--transactions"
+                    onclick="cancelTryOut('POSTapi-wallets--wallet_id--transactions');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-transactions"
+                    id="btn-executetryout-POSTapi-wallets--wallet_id--transactions"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -1003,7 +1101,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-black">POST</small>
-            <b><code>api/transactions</code></b>
+            <b><code>api/wallets/{wallet_id}/transactions</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -1011,7 +1109,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-transactions"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-wallets--wallet_id--transactions"
                value="Bearer {YOUR_AUTH_KEY}"
                data-component="header">
     <br>
@@ -1022,7 +1120,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-transactions"
+                              name="Content-Type"                data-endpoint="POSTapi-wallets--wallet_id--transactions"
                value="application/json"
                data-component="header">
     <br>
@@ -1033,15 +1131,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-transactions"
+                              name="Accept"                data-endpoint="POSTapi-wallets--wallet_id--transactions"
                value="application/json"
                data-component="header">
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                        </form>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>wallet_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="wallet_id"                data-endpoint="POSTapi-wallets--wallet_id--transactions"
+               value="2"
+               data-component="url">
+    <br>
+<p>The ID of the wallet. Example: <code>2</code></p>
+            </div>
+                    </form>
 
-                    <h2 id="transactions-GETapi-transactions--id-">Display the specified resource.</h2>
+                    <h2 id="transactions-GETapi-wallets--wallet_id--transactions--id-">Display the specified resource.</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -1049,13 +1159,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-GETapi-transactions--id-">
+<span id="example-requests-GETapi-wallets--wallet_id--transactions--id-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/transactions/1" \
+    --get "http://localhost:8000/api/wallets/2/transactions/1" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1063,7 +1173,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/transactions/1"
+    "http://localhost:8000/api/wallets/2/transactions/1"
 );
 
 const headers = {
@@ -1079,52 +1189,78 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-transactions--id-">
+<span id="example-responses-GETapi-wallets--wallet_id--transactions--id-">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
                 <pre>
 
-<code class="language-json" style="max-height: 300px;">{&quot;data&quot;:{&quot;id&quot;:1,&quot;attributes&quot;:{&quot;from&quot;:1,&quot;to&quot;:2,&quot;amount&quot;:10},&quot;relationships&quot;:{&quot;fromwallet&quot;:{&quot;data&quot;:{&quot;type&quot;:wallet,&quot;id&quot;:1}},&quot;towallet&quot;:{&quot;data&quot;:{&quot;type&quot;:wallet,&quot;id&quot;:2}}}}}</code>
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;type&quot;: &quot;transaction&quot;,
+        &quot;id&quot;: 1,
+        &quot;attributes&quot;: {
+            &quot;to&quot;: 39,
+            &quot;from&quot;: 47,
+            &quot;amount&quot;: 7.72,
+            &quot;createdAt&quot;: &quot;2025-07-21T12:43:17.000000Z&quot;,
+            &quot;updatedAt&quot;: &quot;2025-07-21T12:43:17.000000Z&quot;
+        },
+        &quot;relationships&quot;: {
+            &quot;fromwallet&quot;: {
+                &quot;data&quot;: {
+                    &quot;type&quot;: &quot;wallet&quot;,
+                    &quot;id&quot;: 47
+                }
+            },
+            &quot;towallet&quot;: {
+                &quot;data&quot;: {
+                    &quot;type&quot;: &quot;wallet&quot;,
+                    &quot;id&quot;: 39
+                }
+            }
+        }
+    }
+}</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-transactions--id-" hidden>
+<span id="execution-results-GETapi-wallets--wallet_id--transactions--id-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-transactions--id-"></span>:
+                id="execution-response-status-GETapi-wallets--wallet_id--transactions--id-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-transactions--id-"
+    <pre class="json"><code id="execution-response-content-GETapi-wallets--wallet_id--transactions--id-"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETapi-transactions--id-" hidden>
+<span id="execution-error-GETapi-wallets--wallet_id--transactions--id-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-transactions--id-">
+    <pre><code id="execution-error-message-GETapi-wallets--wallet_id--transactions--id-">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETapi-transactions--id-" data-method="GET"
-      data-path="api/transactions/{id}"
+<form id="form-GETapi-wallets--wallet_id--transactions--id-" data-method="GET"
+      data-path="api/wallets/{wallet_id}/transactions/{id}"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-transactions--id-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-wallets--wallet_id--transactions--id-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-transactions--id-"
-                    onclick="tryItOut('GETapi-transactions--id-');">Try it out ⚡
+                    id="btn-tryout-GETapi-wallets--wallet_id--transactions--id-"
+                    onclick="tryItOut('GETapi-wallets--wallet_id--transactions--id-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-transactions--id-"
-                    onclick="cancelTryOut('GETapi-transactions--id-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-wallets--wallet_id--transactions--id-"
+                    onclick="cancelTryOut('GETapi-wallets--wallet_id--transactions--id-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-transactions--id-"
+                    id="btn-executetryout-GETapi-wallets--wallet_id--transactions--id-"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -1132,7 +1268,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/transactions/{id}</code></b>
+            <b><code>api/wallets/{wallet_id}/transactions/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -1140,7 +1276,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-transactions--id-"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-wallets--wallet_id--transactions--id-"
                value="Bearer {YOUR_AUTH_KEY}"
                data-component="header">
     <br>
@@ -1151,7 +1287,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-transactions--id-"
+                              name="Content-Type"                data-endpoint="GETapi-wallets--wallet_id--transactions--id-"
                value="application/json"
                data-component="header">
     <br>
@@ -1162,7 +1298,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-transactions--id-"
+                              name="Accept"                data-endpoint="GETapi-wallets--wallet_id--transactions--id-"
                value="application/json"
                data-component="header">
     <br>
@@ -1170,11 +1306,22 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>wallet_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="wallet_id"                data-endpoint="GETapi-wallets--wallet_id--transactions--id-"
+               value="2"
+               data-component="url">
+    <br>
+<p>The ID of the wallet. Example: <code>2</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
 <small>integer</small>&nbsp;
  &nbsp;
                 <input type="number" style="display: none"
-               step="any"               name="id"                data-endpoint="GETapi-transactions--id-"
+               step="any"               name="id"                data-endpoint="GETapi-wallets--wallet_id--transactions--id-"
                value="1"
                data-component="url">
     <br>
@@ -1200,7 +1347,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/wallets?sort=sort%3Dtitle%2C-createdAt&amp;filter%5Bamount%5D=architecto&amp;filter%5Btitle%5D=%2AmyWallet%2A&amp;filter%5BUpdateAt%5D=architecto" \
+    --get "http://localhost:8000/api/wallets?sort=sort%3Dtitle%2C-createdAt&amp;filter%5Bamount%5D=architecto&amp;filter%5Btitle%5D=%2AmyWallet%2A&amp;filter%5BUpdateAt%5D=architecto&amp;includes=0" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1216,6 +1363,7 @@ const params = {
     "filter[amount]": "architecto",
     "filter[title]": "*myWallet*",
     "filter[UpdateAt]": "architecto",
+    "includes": "0",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -1375,6 +1523,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="query">
     <br>
 <p>Filter by last update. for a range filter, input 2 value in crescent order separated by comma. Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>includes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="includes"                data-endpoint="GETapi-wallets"
+               value="0"
+               data-component="query">
+    <br>
+<p>includes sub-resources. usable only by privilaged account. Example: <code>0</code></p>
             </div>
                 </form>
 

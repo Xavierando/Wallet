@@ -63,11 +63,22 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         custom: []
+      includes:
+        name: includes
+        description: 'includes sub-resources. usable only by privilaged account.'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
     cleanQueryParameters:
       sort: 'sort=title,-createdAt'
       'filter[amount]': architecto
       'filter[title]': '*myWallet*'
       'filter[UpdateAt]': architecto
+      includes: 0
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []

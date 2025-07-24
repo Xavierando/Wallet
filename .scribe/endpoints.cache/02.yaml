@@ -6,7 +6,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: api/transactions
+    uri: 'api/wallets/{wallet_id}/transactions'
     metadata:
       groupName: Transactions
       groupDescription: ''
@@ -20,8 +20,19 @@ endpoints:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
+    urlParameters:
+      wallet_id:
+        name: wallet_id
+        description: 'The ID of the wallet.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      wallet_id: 2
     queryParameters:
       sort:
         name: sort
@@ -74,7 +85,68 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"id":1,"attributes":{"from":1,"to":2,"amount":10}]},"relationships":{"fromwallet":{"data":{"type":wallet,"id":1}},"towallet":{"data":{"type":wallet,"id":2}}}}}'
+        content: |-
+          {
+          "data": [
+          {
+          "type": "transaction",
+          "id": 1,
+          "attributes": {
+          "to": 39,
+          "from": 47,
+          "amount": 7.72,
+          "createdAt": "2025-07-21T12:43:17.000000Z",
+          "updatedAt": "2025-07-21T12:43:17.000000Z"
+          },
+          "relationships": {
+          "fromwallet": {
+          "data": {
+          "type": "wallet",
+          "id": 47
+          }
+          },
+          "towallet": {
+          "data": {
+          "type": "wallet",
+          "id": 39
+          }
+          }
+          }
+          }
+          ],
+          "links": {
+          "first": "http://127.0.0.1/api/wallets/47/transactions?page=1",
+          "last": "http://127.0.0.1/api/wallets/47/transactions?page=1",
+          "prev": null,
+          "next": null
+          },
+          "meta": {
+          "current_page": 1,
+          "from": 1,
+          "last_page": 1,
+          "links": [
+          {
+          "url": null,
+          "label": "&laquo; Previous",
+          "active": false
+          },
+          {
+          "url": "http://127.0.0.1/api/wallets/47/transactions?page=1",
+          "label": "1",
+          "active": true
+          },
+          {
+          "url": null,
+          "label": "Next &raquo;",
+          "active": false
+          }
+          ],
+          "path": "http://127.0.0.1/api/wallets/47/transactions",
+          "per_page": 15,
+          "to": 1,
+          "total": 1
+          }
+          }
         headers: []
         description: ''
         custom: []
@@ -90,7 +162,7 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/transactions
+    uri: 'api/wallets/{wallet_id}/transactions'
     metadata:
       groupName: Transactions
       groupDescription: ''
@@ -104,8 +176,19 @@ endpoints:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
+    urlParameters:
+      wallet_id:
+        name: wallet_id
+        description: 'The ID of the wallet.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      wallet_id: 2
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -114,7 +197,34 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":{"id":1,"attributes":{"from":1,"to":2,"amount":10}},"relationships":{"fromwallet":{"data":{"type":wallet,"id":1}},"towallet":{"data":{"type":wallet,"id":2}}}}}'
+        content: |-
+          {
+          "data": {
+          "type": "transaction",
+          "id": 1,
+          "attributes": {
+          "to": 39,
+          "from": 47,
+          "amount": 7.72,
+          "createdAt": "2025-07-21T12:43:17.000000Z",
+          "updatedAt": "2025-07-21T12:43:17.000000Z"
+          },
+          "relationships": {
+          "fromwallet": {
+          "data": {
+          "type": "wallet",
+          "id": 47
+          }
+          },
+          "towallet": {
+          "data": {
+          "type": "wallet",
+          "id": 39
+          }
+          }
+          }
+          }
+          }
         headers: []
         description: ''
         custom: []
@@ -130,7 +240,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/transactions/{id}'
+    uri: 'api/wallets/{wallet_id}/transactions/{id}'
     metadata:
       groupName: Transactions
       groupDescription: ''
@@ -145,6 +255,16 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
+      wallet_id:
+        name: wallet_id
+        description: 'The ID of the wallet.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
       id:
         name: id
         description: 'The ID of the transaction.'
@@ -156,6 +276,7 @@ endpoints:
         nullable: false
         custom: []
     cleanUrlParameters:
+      wallet_id: 2
       id: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -165,7 +286,34 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":{"id":1,"attributes":{"from":1,"to":2,"amount":10},"relationships":{"fromwallet":{"data":{"type":wallet,"id":1}},"towallet":{"data":{"type":wallet,"id":2}}}}}'
+        content: |-
+          {
+          "data": {
+          "type": "transaction",
+          "id": 1,
+          "attributes": {
+          "to": 39,
+          "from": 47,
+          "amount": 7.72,
+          "createdAt": "2025-07-21T12:43:17.000000Z",
+          "updatedAt": "2025-07-21T12:43:17.000000Z"
+          },
+          "relationships": {
+          "fromwallet": {
+          "data": {
+          "type": "wallet",
+          "id": 47
+          }
+          },
+          "towallet": {
+          "data": {
+          "type": "wallet",
+          "id": 39
+          }
+          }
+          }
+          }
+          }
         headers: []
         description: ''
         custom: []

@@ -24,6 +24,7 @@ class WalletController extends ApiController
      * @queryParam filter[amount] Filter by amount. for a range filter input 2 value in crescent order separated by comma. Exemple: 10,1000
      * @queryParam filter[title] Filter by title. Wildcards are supported. Example: *myWallet*
      * @queryParam filter[UpdateAt] Filter by last update. for a range filter, input 2 value in crescent order separated by comma.
+     * @queryParam includes includes sub-resources. usable only by privilaged account. Example: includes:transactions
      */
     public function index(Request $request, WalletFilter $filter)
     {

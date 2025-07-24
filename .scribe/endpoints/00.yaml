@@ -11,7 +11,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: Login
-      description: "Authenticates the client and returns the client's API token."
+      description: "Authenticates the client and returns a client's API token."
       authenticated: false
       custom: []
     headers:
@@ -109,7 +109,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: Login
-      description: "Authenticates the emploie and returns the user's API token."
+      description: "Authenticates the emploie and returns a user's API token."
       authenticated: false
       custom: []
     headers:

@@ -46,7 +46,7 @@ class WalletStoreRequest extends WalletRequest
                 'example' => 'No-example',
             ],
             'data.attributes.amount' => [
-                'description' => "numeric amount to transfer",
+                'description' => 'numeric amount to transfer',
                 'example' => 'No-example',
             ],
         ];

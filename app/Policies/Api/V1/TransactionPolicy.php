@@ -3,11 +3,8 @@
 namespace App\Policies\Api\V1;
 
 use App\Models\Client;
-use App\Models\Emploie;
-use App\Models\Transaction;
 use App\Models\User;
 use App\Permissions\V1\Abilities;
-use Illuminate\Support\Facades\Auth;
 
 class TransactionPolicy
 {
@@ -19,32 +16,13 @@ class TransactionPolicy
         //
     }
 
-    public function index(User $user, string $visibility = '')
+    public function index(User $user, $wallet)
     {
-        if (
-            $visibility == 'all'
-            && $user->tokenCan(Abilities::ShowTransaction)
-            && Auth::user()::class == Emploie::class
-        ) {
-            return true;
-        }
-
-        if ($visibility != 'all' && $user->tokenCan(Abilities::ShowOwnTransaction)) {
-            return true;
-        }
-    }
-
-    public function show(User $user, Transaction $transaction)
-    {
-        if (
-            $user->tokenCan(Abilities::ShowOwnTransaction)
-            && $transaction->from()->client_id == $user->id
-            && $transaction->to()->client_id == $user->id
-        ) {
-            return true;
-        }
-
         if ($user->tokenCan(Abilities::ShowTransaction)) {
+            return true;
+        }
+
+        if ($wallet->client_id == $user->id && $user->tokenCan(Abilities::ShowOwnTransaction)) {
             return true;
         }
 

@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Filters\V1\TransactionFilter;
 use App\Http\Resources\Api\V1\TransactionResource;
-use App\Models\Client;
 use App\Models\Transaction;
+use App\Models\Wallet;
 use App\Policies\Api\V1\TransactionPolicy;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends ApiController
 {
@@ -28,17 +27,11 @@ class TransactionController extends ApiController
      *
      * @response {"data":[{"id":1,"attributes":{"from":1,"to":2,"amount":10}]},"relationships":{"fromwallet":{"data":{"type":wallet,"id":1}},"towallet":{"data":{"type":wallet,"id":2}}}}}
      */
-    public function index(Request $request, TransactionFilter $filter)
+    public function index(TransactionFilter $filter, Wallet $wallet)
     {
 
-        if ($this->isAbleTo('index', ['all'])) {
-            return TransactionResource::collection(Transaction::filter($filter)->paginate());
-        }
-
-        if ($this->isAbleTo('index', []) && Auth::user()::class == Client::class) {
-            $request->merge(['filter.client' => Auth::user()->id]);
-
-            return TransactionResource::collection(Transaction::filter($filter)->paginate());
+        if ($this->isAbleTo('index', [$wallet])) {
+            return TransactionResource::collection(Transaction::where('from', $wallet->id)->orWhere('to', $wallet->id)->filter($filter)->paginate());
         }
 
         return $this->notAuthorized('Unauthorized');
@@ -82,5 +75,4 @@ class TransactionController extends ApiController
 
         return $this->notAuthorized('Unauthorized');
     }
-
 }

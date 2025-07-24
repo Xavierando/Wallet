@@ -31,6 +31,8 @@ final class Abilities
 
     public const CreateOwnTransaction = 'transaction:own:create';
 
+    public const CreateTransaction = 'transaction:create';
+
     public static function getAbilities(Client|Emploie $user)
     {
         if ($user->accountType == ClientTiers::Basic || $user->accountType == ClientTiers::Pro || $user->accountType == ClientTiers::Diamond) {
@@ -39,6 +41,8 @@ final class Abilities
                 self::CreateOwnWallet,
                 self::UpdateOwnWallet,
                 self::DeleteOwnWallet,
+                self::ShowOwnTransaction,
+                self::CreateOwnTransaction,
             ];
         }
 
@@ -48,6 +52,8 @@ final class Abilities
                 self::CreateWallet,
                 self::UpdateWallet,
                 self::DeleteWallet,
+                self::ShowTransaction,
+                self::CreateTransaction,
             ];
         }
 

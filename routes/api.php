@@ -14,5 +14,5 @@ Route::delete('/emploie/token', [AuthEmploieController::class, 'deleteToken'])->
 
 Route::name('apiv1.')->middleware('auth:sanctum')->group(function () {
     Route::apiResource('wallets', WalletController::class);
-    Route::apiResource('transactions', TransactionController::class)->only(['index','store','show']);
+    Route::apiResource('wallets.transactions', TransactionController::class)->only(['index', 'store', 'show']);
 });

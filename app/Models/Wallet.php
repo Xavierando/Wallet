@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Wallet extends Model
 {
@@ -27,19 +26,16 @@ class Wallet extends Model
 
     public function transactions(): Collection
     {
-        return Transaction::where('to',$this->id)->orWhere('from',$this->id)->get();
+        return Transaction::where('to', $this->id)->orWhere('from', $this->id)->get();
     }
 
     /**
-
      * The model's default values for attributes.
 
      *
 
      * @var array
-
      */
-
     protected $attributes = [
         'amount' => 0,
     ];

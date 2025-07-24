@@ -42,7 +42,7 @@ class AuthController extends Controller
      * destroy's the API token.
      *
      * @authenticated
-     * 
+     *
      * @group Authentication
      *
      * @response 200 {}

@@ -18,7 +18,7 @@ class AuthClientController extends AuthController
      * @unauthenticated
      *
      * @group Authentication
-     * 
+     *
      * @request {"email":"myemail@test.tst","password":"mypassword"}
      *
      * @response 200 {"data": {"token": "{YOUR_AUTH_KEY}"},"message": "Authenticated","status": 200}

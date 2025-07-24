@@ -2,6 +2,7 @@
 
 use App\Models\Client;
 use App\Models\Emploie;
+use App\Models\Transaction;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,56 +13,52 @@ uses(RefreshDatabase::class);
 
 it('have visibility on transactions on own wallets as a client', function () {
     $client = Client::Factory()->create();
-    $wallet = Wallet::Factory()->create(['client_id' => $client->id]);
-    $wallet = Wallet::Factory()->create(['client_id' => $client->id]);
-    Wallet::factory()->count(100)->create();
+    $walletfrom = Wallet::Factory()->create(['client_id' => $client->id]);
+    $walletto = Wallet::Factory()->create();
+    Transaction::Factory()->count(5)->create(['from' => $walletfrom->id, 'to' => $walletto->id]);
+    Transaction::Factory()->count(5)->create(['from' => $walletto->id, 'to' => $walletfrom->id]);
 
     Sanctum::actingAs(
-
         $client,
-
-        [Abilities::ShowOwnWallet]
-
+        [Abilities::ShowOwnTransaction]
     );
 
     $response = $this
-        ->getJson(route('apiv1.transactions.index'));
+        ->getJson(route('apiv1.wallets.transactions.index', ['wallet' => $walletfrom->id]));
 
-    $response
-        ->assertStatus(200)
+    $response->assertStatus(200)
         ->assertJson(
-            fn (AssertableJson $json) => $json->has('data', 2)
-                ->first(
-                    fn (AssertableJson $json) => $json->where('0.relationships.client.data.id', $client->id)
-                        ->where('1.relationships.client.data.id', $client->id)
-                        ->etc()
-                )->etc()
+            fn (AssertableJson $json) => $json->has('data', 10)
+                ->etc()
         );
 });
 
-it('do not have visibility on not own wallets as a client', function () {
+it('do not have visibility on transactions on not own wallets as a client', function () {
     $client = Client::Factory()->create();
-    Wallet::factory()->count(100)->create();
+    $walletfrom = Wallet::Factory()->create(['client_id' => $client->id]);
+    $walletto = Wallet::Factory()->create();
+    Transaction::Factory()->count(5)->create(['from' => $walletfrom->id, 'to' => $walletto->id]);
+    Transaction::Factory()->count(5)->create(['from' => $walletto->id, 'to' => $walletfrom->id]);
 
     Sanctum::actingAs(
-
         $client,
-
-        [Abilities::ShowOwnWallet]
-
+        [Abilities::ShowOwnTransaction]
     );
 
     $response = $this
-        ->getJson(route('apiv1.wallets.index'));
+        ->getJson(route('apiv1.wallets.transactions.index', ['wallet' => $walletto->id]));
 
     $response
         ->assertStatus(200)
-        ->assertJsonPath('data', []);
+        ->assertJsonPath('errors.status', 401)
+        ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('do not have visibility on wallets as a emploie without authorization', function () {
+it('do not have visibility on transactions  on wallets as a emploie without authorization', function () {
     $emploie = Emploie::Factory()->create();
-    Wallet::factory()->count(10)->create();
+    Wallet::factory()->count(100)->create();
+    $wallet = Wallet::Factory()->create();
+    Transaction::Factory()->count(5)->create(['from' => $wallet->id]);
 
     Sanctum::actingAs(
 
@@ -72,7 +69,7 @@ it('do not have visibility on wallets as a emploie without authorization', funct
     );
 
     $response = $this
-        ->getJson(route('apiv1.wallets.index'));
+        ->getJson(route('apiv1.wallets.transactions.index', ['wallet' => $wallet->id]));
 
     $response
         ->assertStatus(200)
@@ -80,20 +77,22 @@ it('do not have visibility on wallets as a emploie without authorization', funct
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('have visibility on wallets as a emploie with authorization', function () {
+it('have visibility on transactions on wallets as a emploie with authorization', function () {
     $emploie = Emploie::Factory()->create();
-    Wallet::factory()->count(10)->create();
+    Wallet::factory()->count(100)->create();
+    $wallet = Wallet::Factory()->create();
+    Transaction::Factory()->count(10)->create(['from' => $wallet->id]);
 
     Sanctum::actingAs(
 
         $emploie,
 
-        [Abilities::ShowWallet]
+        [Abilities::ShowTransaction]
 
     );
 
     $response = $this
-        ->getJson(route('apiv1.wallets.index'));
+        ->getJson(route('apiv1.wallets.transactions.index', ['wallet' => $wallet->id]));
 
     $response
         ->assertStatus(200)

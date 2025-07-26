@@ -27,6 +27,8 @@ it('update a new wallet as a client', function () {
             ],
         ]);
 
+    $wallet = Wallet::Find($wallet->id);
+    expect($wallet->title)->toBe('new awesom wallet');
     $response
         ->assertStatus(200)
         ->assertJsonPath('data.attributes.title', 'new awesom wallet')

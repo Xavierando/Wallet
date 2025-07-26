@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Filters\V1\WalletFilter;
 use App\Http\Requests\Api\V1\WalletStoreRequest;
+use App\Http\Requests\Api\V1\WalletUpdateRequest;
 use App\Http\Resources\Api\V1\WalletResource;
 use App\Models\Client;
 use App\Models\Wallet;
@@ -93,7 +94,7 @@ class WalletController extends ApiController
      *
      * @request {"data":{"attributes":{"title":"new wallet"}}}
      */
-    public function update(WalletStoreRequest $request, Wallet $wallet)
+    public function update(WalletUpdateRequest $request, Wallet $wallet)
     {
         if ($this->isAbleTo('update', [$wallet])) {
             $wallet->update($request->mappedAttributes());

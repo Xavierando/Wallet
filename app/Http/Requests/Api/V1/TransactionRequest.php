@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WalletRequest extends FormRequest
+class TransactionRequest extends FormRequest
 {
     /**
      * map the attributes of the request to model fields
@@ -12,11 +12,9 @@ class WalletRequest extends FormRequest
     public function mappedAttributes(array $otherAttributes = [])
     {
         $attributeMap = array_merge([
-            'data.attributes.from' => 'required|exist:wallet,id',
-            'data.attributes.to' => 'required|exist:wallet,id',
-            'data.attributes.amount' => 'required|numeric:strict',
-            'data.attributes.createdAt' => 'created_at',
-            'data.attributes.updatedAt' => 'updated_at',
+            'data.attributes.from' => 'from',
+            'data.attributes.to' => 'to',
+            'data.attributes.amount' => 'amount',
         ], $otherAttributes);
 
         $attributesToUpdate = [];

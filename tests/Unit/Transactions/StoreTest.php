@@ -2,70 +2,71 @@
 
 use App\Models\Client;
 use App\Models\Emploie;
+use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-it('store a new wallet as a client', function () {
+it('should store a new transaction as a client', function () {
     $client = Client::Factory()->create();
+    $walletFrom = Wallet::Factory()->create(['client_id' => $client->id]);
+    $walletTo = Wallet::Factory()->create();
+    $amount = 1;
+
+    $amountFrom = $walletFrom->amount;
+    $amountTo = $walletTo->amount;
 
     Sanctum::actingAs(
-
         $client,
-
-        [Abilities::CreateOwnWallet]
-
+        [Abilities::CreateOwnTransaction]
     );
 
     $response = $this
-        ->postJson(route('apiv1.wallets.store'), [
+        ->postJson(route('apiv1.wallets.transactions.store', ['wallet' => $walletFrom->id]), [
             'data' => [
                 'attributes' => [
-                    'title' => 'new wallet',
-                ],
-                'relationship' => [
-                    'client' => [
-                        'data' => [
-                            'id' => $client->id,
-                        ],
-                    ],
+                    'from' => $walletFrom->id,
+                    'to' => $walletTo->id,
+                    'amount' => $amount,
                 ],
             ],
         ]);
 
     $response
         ->assertStatus(201)
-        ->assertJsonPath('data.attributes.title', 'new wallet')
-        ->assertJsonPath('data.attributes.amount', 0)
-        ->assertJsonPath('data.relationships.client.data.id', $client->id);
+        ->assertJsonPath('data.type', 'transaction')
+        ->assertJsonPath('data.attributes.amount', $amount);
+
+    $walletFrom->refresh();
+    $walletTo->refresh();
+
+    expect($walletFrom->amount)->toBe($amountFrom - $amount * 100);
+    expect($walletTo->amount)->toBe($amountTo + $amount * 100);
 });
 
 it('can not store a new wallet as a client with a different id', function () {
     $client = Client::Factory()->create();
-    $client2 = Client::Factory()->create();
+    $walletFrom = Wallet::Factory()->create(['client_id' => $client->id]);
+    $walletTo = Wallet::Factory()->create();
+    $amount = 1;
+
+    $amountFrom = $walletFrom->amount;
+    $amountTo = $walletTo->amount;
 
     Sanctum::actingAs(
-
-        $client2,
-
-        [Abilities::CreateOwnWallet]
-
+        Client::Factory()->create(),
+        [Abilities::CreateOwnTransaction]
     );
 
     $response = $this
-        ->postJson(route('apiv1.wallets.store'), [
+        ->postJson(route('apiv1.wallets.transactions.store', ['wallet' => $walletFrom->id]), [
             'data' => [
                 'attributes' => [
-                    'title' => 'new wallet',
-                ],
-                'relationships' => [
-                    'client' => [
-                        'data' => [
-                            'id' => $client->id,
-                        ],
-                    ],
+                    'from' => $walletFrom->id,
+                    'to' => $walletTo->id,
+                    'amount' => $amount,
                 ],
             ],
         ]);
@@ -77,64 +78,63 @@ it('can not store a new wallet as a client with a different id', function () {
 });
 
 it('store a new wallet for a client as Emploie', function () {
-    $emploie = Emploie::Factory()->create();
     $client = Client::Factory()->create();
+    $walletFrom = Wallet::Factory()->create(['client_id' => $client->id]);
+    $walletTo = Wallet::Factory()->create();
+    $amount = 1;
+
+    $amountFrom = $walletFrom->amount;
+    $amountTo = $walletTo->amount;
 
     Sanctum::actingAs(
-
-        $emploie,
-
-        [Abilities::CreateWallet]
-
+        Emploie::Factory()->create(),
+        [Abilities::CreateTransaction]
     );
 
     $response = $this
-        ->postJson(route('apiv1.wallets.store'), [
+        ->postJson(route('apiv1.wallets.transactions.store', ['wallet' => $walletFrom->id]), [
             'data' => [
                 'attributes' => [
-                    'title' => 'new wallet',
-                ],
-                'relationships' => [
-                    'client' => [
-                        'data' => [
-                            'id' => $client->id,
-                        ],
-                    ],
+                    'from' => $walletFrom->id,
+                    'to' => $walletTo->id,
+                    'amount' => $amount,
                 ],
             ],
         ]);
 
     $response
         ->assertStatus(201)
-        ->assertJsonPath('data.attributes.title', 'new wallet')
-        ->assertJsonPath('data.attributes.amount', 0)
-        ->assertJsonPath('data.relationships.client.data.id', $client->id);
+        ->assertJsonPath('data.type', 'transaction')
+        ->assertJsonPath('data.attributes.amount', $amount);
+
+    $walletFrom->refresh();
+    $walletTo->refresh();
+
+    expect($walletFrom->amount)->toBe($amountFrom - $amount * 100);
+    expect($walletTo->amount)->toBe($amountTo + $amount * 100);
 });
 
 it('can not store a new wallet for a client as Emploie', function () {
-    $emploie = Emploie::Factory()->create();
     $client = Client::Factory()->create();
+    $walletFrom = Wallet::Factory()->create(['client_id' => $client->id]);
+    $walletTo = Wallet::Factory()->create();
+    $amount = 1;
+
+    $amountFrom = $walletFrom->amount;
+    $amountTo = $walletTo->amount;
 
     Sanctum::actingAs(
-
-        $emploie,
-
+        Emploie::Factory()->create(),
         []
-
     );
 
     $response = $this
-        ->postJson(route('apiv1.wallets.store'), [
+        ->postJson(route('apiv1.wallets.transactions.store', ['wallet' => $walletFrom->id]), [
             'data' => [
                 'attributes' => [
-                    'title' => 'new wallet',
-                ],
-                'relationship' => [
-                    'client' => [
-                        'data' => [
-                            'id' => $client->id,
-                        ],
-                    ],
+                    'from' => $walletFrom->id,
+                    'to' => $walletTo->id,
+                    'amount' => $amount,
                 ],
             ],
         ]);

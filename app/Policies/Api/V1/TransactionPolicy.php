@@ -4,6 +4,7 @@ namespace App\Policies\Api\V1;
 
 use App\Models\Client;
 use App\Models\User;
+use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
 
 class TransactionPolicy
@@ -29,14 +30,14 @@ class TransactionPolicy
         return false;
     }
 
-    public function store(User $user, $client_id)
+    public function store(User $user, $wallet_id)
     {
-        if ($user->tokenCan(Abilities::CreateOwnTransaction)) {
+        if ($user->tokenCan(Abilities::CreateTransaction)) {
             return true;
         }
 
         if (
-            $user->id == $client_id
+            $user->id == Wallet::findOrFail($wallet_id)->client_id
             && $user::class == Client::class
             && $user->tokenCan(Abilities::CreateOwnTransaction)
         ) {

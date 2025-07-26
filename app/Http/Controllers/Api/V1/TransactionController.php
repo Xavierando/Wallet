@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Filters\V1\TransactionFilter;
+use App\Http\Requests\Api\V1\TransactionStoreRequest;
 use App\Http\Resources\Api\V1\TransactionResource;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use App\Policies\Api\V1\TransactionPolicy;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends ApiController
 {
@@ -134,11 +137,34 @@ class TransactionController extends ApiController
     }
 }
      */
-    public function store(Request $request)
+    public function store(TransactionStoreRequest $request)
     {
-
         if ($this->isAbleTo('store', [$request->mappedAttributes()['from']])) {
-            return new TransactionResource(Transaction::create($request->mappedAttributes()));
+            DB::beginTransaction();
+            try {
+
+                $requestData = $request->mappedAttributes();
+                $requestData['amount'] *= 100;
+                $transaction = new TransactionResource(Transaction::create($requestData));
+
+                $walletFrom = Wallet::findOrFail($requestData['from']);
+                $walletTo = Wallet::findOrFail($requestData['to']);
+
+                // return $walletFrom->amount - $requestData['amount'];
+                $walletFrom->amount = $walletFrom->amount - $requestData['amount'];
+                $walletFrom->save();
+
+                $walletTo->amount = $walletTo->amount + $requestData['amount'];
+                $walletTo->save();
+
+                DB::commit();
+
+                return $transaction;
+            } catch (Exception $e) {
+                DB::rollBack();
+
+                return $this->error('Operation canceled');
+            }
         }
 
         return $this->notAuthorized('Unauthorized');

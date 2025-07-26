@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api\V1;
 
-class WalletStoreRequest extends WalletRequest
+class TransactionStoreRequest extends TransactionRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,8 @@ class WalletStoreRequest extends WalletRequest
         return [
             'data' => 'required|array',
             'data.attributes' => 'required|array',
-            'data.attributes.from' => 'required|exist:wallet,id',
-            'data.attributes.to' => 'required|exist:wallet,id',
+            'data.attributes.from' => 'required|exists:wallets,id',
+            'data.attributes.to' => 'required|exists:wallets,id',
             'data.attributes.amount' => 'required|numeric:strict',
         ];
     }

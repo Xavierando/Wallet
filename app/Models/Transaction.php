@@ -14,6 +14,12 @@ class Transaction extends Model
     /** @use HasFactory<\Database\Factories\TranfertFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'from',
+        'to',
+        'amount',
+    ];
+
     public function to(): BelongsTo
     {
         return $this->belongsTo(Wallet::class, 'to');

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api\V1;
 
-class WalletStoreRequest extends WalletRequest
+class WalletUpdateRequest extends WalletRequest
 {
     /**
      * Determine if the user is authorized to make this request.

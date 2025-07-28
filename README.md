@@ -14,7 +14,7 @@ Portafolio project for a simple restFull API Featuring:
 - different Tiers of Clients and Emploies Authorization
 - filter and sort 
 - API documentation at /docs 
-- Test actions
+- Test suits
 
 ## License
 

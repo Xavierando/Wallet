@@ -126,24 +126,19 @@ it('should filter by updateAt', function () {
         ->assertStatus(200)
         ->assertJsonPath('meta.total', $count);
 });
-/*
+
 it('should filter by updateAt range', function () {
-    Wallet::factory()->count(100)->create();
-    $client = Client::Factory()->create();
-    $filterDate = [now()->subDay(3), now()->subDays()];
-    Wallet::factory()->create(['updated_at' => now()->subDay()]);
-    Wallet::factory()->create(['updated_at' => now()->subDays(2)]);
-    Wallet::factory()->create(['updated_at' => now()->subDays(2)]);
-    Wallet::factory()->create(['updated_at' => now()->subDays(3)]);
-    Wallet::factory()->create(['updated_at' => now()->subDays(4)]);
-    Wallet::factory()->create(['updated_at' => now()->subDays(5)]);
+    $filterDate = array_map(
+        fn ($v) => $v->format('Y-m-d'),
+        [now()->subDay(3), now()->subDays()]
+    );
+    for ($i = 0; $i < 100; $i++) {
+        Wallet::factory()->create(['updated_at' => now()->subSeconds(rand(0, 10 * 24 * 60 * 60))]);
+    }
 
     $count = Wallet::whereBetween(
         'updated_at',
-        array_map(
-            fn ($v) => $v->format('Y-m-d'),
-            $filterDate
-        )
+        $filterDate
     )->count();
 
     Sanctum::actingAs(
@@ -158,11 +153,8 @@ it('should filter by updateAt range', function () {
                 [
                     'filter' => [
                         'updatedAt' => array_reduce(
-                            array_map(
-                                fn ($v) => $v->format('Y-m-d'),
-                                $filterDate
-                            ),
-                            fn ($c, $i) => ($c == '') ? $i : ','.$i,
+                            $filterDate,
+                            fn ($c, $i) => ($c == '') ? $i : $c.','.$i,
                             ''
                         ),
                     ],
@@ -174,4 +166,43 @@ it('should filter by updateAt range', function () {
         ->assertStatus(200)
         ->assertJsonPath('meta.total', $count);
 });
-*/
+
+it('should filter by createdAt range', function () {
+    $filterDate = array_map(
+        fn ($v) => $v->format('Y-m-d'),
+        [now()->subDay(3), now()->subDays()]
+    );
+    for ($i = 0; $i < 100; $i++) {
+        Wallet::factory()->create(['created_at' => now()->subSeconds(rand(0, 10 * 24 * 60 * 60))]);
+    }
+
+    $count = Wallet::whereBetween(
+        'created_at',
+        $filterDate
+    )->count();
+
+    Sanctum::actingAs(
+        Emploie::Factory()->create(),
+        [Abilities::ShowWallet]
+    );
+
+    $response = $this
+        ->getJson(
+            route(
+                'apiv1.wallets.index',
+                [
+                    'filter' => [
+                        'createdAt' => array_reduce(
+                            $filterDate,
+                            fn ($c, $i) => ($c == '') ? $i : $c.','.$i,
+                            ''
+                        ),
+                    ],
+                ]
+            )
+        );
+
+    $response
+        ->assertStatus(200)
+        ->assertJsonPath('meta.total', $count);
+});

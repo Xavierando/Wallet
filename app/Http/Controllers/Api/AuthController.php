@@ -15,7 +15,7 @@ class AuthController extends Controller
 {
     use ApiResponses;
 
-    public function getUserToken(LoginRequest $request, Client|Emploie $user)
+    public function getUserToken(LoginRequest $request, Client|Emploie|null $user)
     {
         $credential = $request->validated();
 

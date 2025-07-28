@@ -32,6 +32,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Wallet::factory()->count(100)->create();
-        Transaction::factory()->count(100)->create();
+        Transaction::factory()->count(500)->create();
     }
 }

@@ -46,7 +46,7 @@ class TransactionFilter extends QueryFilter
             return $this->builder->whereBetween('amount', $amounts);
         }
 
-        return $this->builder->whereDate('amount', $amounts[0]);
+        return $this->builder->where('amount', $amounts[0]);
     }
 
     public function updatedAt($value)

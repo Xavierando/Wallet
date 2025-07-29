@@ -10,8 +10,8 @@
 ## About Wallet
 
 Portafolio project for a simple restFull API Featuring:
-- 2 Authentication endpoint for Clients and Emploies
-- different Tiers of Clients and Emploies Authorization
+- 2 Authentication endpoint for Clients and Employees
+- different Tiers of Clients and Employees Authorization
 - filter and sort 
 - API documentation at /docs endpoint 
 - Test suits

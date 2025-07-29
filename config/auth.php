@@ -68,9 +68,9 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\Client::class),
         ],
-        'emploie' => [
+        'employee' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Emploie::class),
+            'model' => env('AUTH_MODEL', App\Models\Employee::class),
         ],
 
         // 'users' => [
@@ -105,8 +105,8 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'emploies' => [
-            'provider' => 'emploies',
+        'employees' => [
+            'provider' => 'employees',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,

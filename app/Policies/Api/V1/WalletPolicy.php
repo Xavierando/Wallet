@@ -3,7 +3,7 @@
 namespace App\Policies\Api\V1;
 
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
@@ -24,7 +24,7 @@ class WalletPolicy
         if (
             $visibility == 'all'
             && $user->tokenCan(Abilities::ShowWallet)
-            && Auth::user()::class == Emploie::class
+            && Auth::user()::class == Employee::class
         ) {
             return true;
         }
@@ -35,7 +35,7 @@ class WalletPolicy
 
     }
 
-    public function show(Client|Emploie $user, Wallet $wallet)
+    public function show(Client|Employee $user, Wallet $wallet)
     {
         if ($user->tokenCan(Abilities::ShowOwnWallet) && $wallet->client_id == $user->id) {
             return true;

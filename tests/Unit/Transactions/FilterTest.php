@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
@@ -16,7 +16,7 @@ it('should filter transaction by wallet id', function () {
 
     Sanctum::actingAs(
 
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
 
         [Abilities::ShowWallet, Abilities::ShowTransaction]
 
@@ -59,7 +59,7 @@ it('should filter transaction by amount range', function () {
 
     Sanctum::actingAs(
 
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
 
         [Abilities::ShowWallet, Abilities::ShowTransaction]
 
@@ -90,7 +90,7 @@ it('should filter transaction by amount', function () {
 
     Sanctum::actingAs(
 
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
 
         [Abilities::ShowWallet, Abilities::ShowTransaction]
 
@@ -120,7 +120,7 @@ it('should filter transaction by updateAt', function () {
     $count = Transaction::whereDate('updated_at', $filterDate)->count();
 
     Sanctum::actingAs(
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
         [Abilities::ShowWallet, Abilities::ShowTransaction]
     );
 
@@ -149,7 +149,7 @@ it('should filter transaction by updateAt range', function () {
     )->count();
 
     Sanctum::actingAs(
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
         [Abilities::ShowWallet, Abilities::ShowTransaction]
     );
 
@@ -192,7 +192,7 @@ it('should filter transaction by createdAt range', function () {
     )->count();
 
     Sanctum::actingAs(
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
         [Abilities::ShowWallet, Abilities::ShowTransaction]
     );
 

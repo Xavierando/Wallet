@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use App\Enum\ClientTiers;
-use App\Enum\EmploiePositions;
+use App\Enum\EmployeePositions;
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Models\Transaction;
 use App\Models\Wallet;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -25,10 +25,10 @@ class DatabaseSeeder extends Seeder
             'tier' => ClientTiers::Diamond,
         ]);
 
-        Emploie::factory()->create([
+        Employee::factory()->create([
             'name' => 'Test Client',
             'email' => 'test@example.com',
-            'position' => EmploiePositions::Supervisor,
+            'position' => EmployeePositions::Supervisor,
         ]);
 
         Wallet::factory()->count(100)->create();

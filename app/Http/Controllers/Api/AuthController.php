@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginRequest;
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Permissions\V1\Abilities;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class AuthController extends Controller
 {
     use ApiResponses;
 
-    public function getUserToken(LoginRequest $request, Client|Emploie|null $user)
+    public function getUserToken(LoginRequest $request, Client|Employee|null $user)
     {
         $credential = $request->validated();
 

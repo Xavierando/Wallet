@@ -3,9 +3,9 @@
 namespace App\Permissions\V1;
 
 use App\Enum\ClientTiers;
-use App\Enum\EmploiePositions;
+use App\Enum\EmployeePositions;
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 
 final class Abilities
 {
@@ -33,7 +33,7 @@ final class Abilities
 
     public const CreateTransaction = 'transaction:create';
 
-    public static function getAbilities(Client|Emploie $user)
+    public static function getAbilities(Client|Employee $user)
     {
         if ($user->accountType == ClientTiers::Basic || $user->accountType == ClientTiers::Pro || $user->accountType == ClientTiers::Diamond) {
             return [
@@ -46,7 +46,7 @@ final class Abilities
             ];
         }
 
-        if ($user->accountType == EmploiePositions::Normal || $user->accountType == EmploiePositions::Supervisor) {
+        if ($user->accountType == EmployeePositions::Normal || $user->accountType == EmployeePositions::Supervisor) {
             return [
                 self::ShowWallet,
                 self::CreateWallet,

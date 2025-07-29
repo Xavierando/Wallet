@@ -4,18 +4,18 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Enum\EmploiePositions;
+use App\Enum\EmployeePositions;
 use App\Interfaces\AccountType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Emploie extends User implements AccountType
+class Employee extends User implements AccountType
 {
-    /** @use HasFactory<\Database\Factories\EmploieFactory> */
+    /** @use HasFactory<\Database\Factories\EmployeeFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
-    public EmploiePositions $accountType {
+    public EmployeePositions $accountType {
         get => $this->position;
     }
 
@@ -50,7 +50,7 @@ class Emploie extends User implements AccountType
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'position' => EmploiePositions::class,
+            'position' => EmployeePositions::class,
         ];
     }
 }

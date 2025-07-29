@@ -2,8 +2,10 @@
 
 use App\Models\Client;
 use App\Models\Employee;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 
+uses(RefreshDatabase::class);
 it('should authenticate a client', function () {
     $client = Client::Factory()->create();
 

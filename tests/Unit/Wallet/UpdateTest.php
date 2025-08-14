@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -83,12 +83,12 @@ it('can not update a not own wallet as a client', function () {
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('can update a not own wallet as a emploie', function () {
-    $emploie = Emploie::Factory()->create();
+it('can update a not own wallet as a employee', function () {
+    $employee = Employee::Factory()->create();
     $wallet = Wallet::Factory()->create();
 
     Sanctum::actingAs(
-        $emploie,
+        $employee,
         [Abilities::UpdateWallet]
     );
 
@@ -107,12 +107,12 @@ it('can update a not own wallet as a emploie', function () {
         ->assertJsonPath('data.relationships.client.data.id', $wallet->client_id);
 });
 
-it('can not update a not own wallet as a emploie without permission', function () {
-    $emploie = Emploie::Factory()->create();
+it('can not update a not own wallet as a employee without permission', function () {
+    $employee = Employee::Factory()->create();
     $wallet = Wallet::Factory()->create();
 
     Sanctum::actingAs(
-        $emploie,
+        $employee,
         []
     );
 
@@ -158,13 +158,13 @@ it('can not update a new wallet amount as a client', function () {
         ->assertJsonPath('data.relationships.client.data.id', $client->id);
 });
 
-it('can not update a new wallet amount as a emploie', function () {
-    $emploie = Emploie::Factory()->create();
+it('can not update a new wallet amount as a employee', function () {
+    $employee = Employee::Factory()->create();
     $wallet = Wallet::Factory()->create();
     $amount = $wallet->amount;
 
     Sanctum::actingAs(
-        $emploie,
+        $employee,
         [Abilities::UpdateWallet]
     );
 

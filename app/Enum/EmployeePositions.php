@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-enum EmploiePositions
+enum EmployeePositions
 {
     case Normal;
     case Audit;

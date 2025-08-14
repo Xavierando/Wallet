@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('emploies', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
@@ -56,7 +56,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('clients');
-        Schema::dropIfExists('emploies');
+        Schema::dropIfExists('employees');
         Schema::dropIfExists('password_reset_tokens');
         // Schema::dropIfExists('sessions');
     }

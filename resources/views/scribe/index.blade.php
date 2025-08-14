@@ -77,11 +77,11 @@
                                                                                 <li class="tocify-item level-2" data-unique="authentication-DELETEapi-token">
                                 <a href="#authentication-DELETEapi-token">Logout</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-emploie-token">
-                                <a href="#authentication-POSTapi-emploie-token">Login</a>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-employee-token">
+                                <a href="#authentication-POSTapi-employee-token">Login</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-DELETEapi-emploie-token">
-                                <a href="#authentication-DELETEapi-emploie-token">Logout</a>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-DELETEapi-employee-token">
+                                <a href="#authentication-DELETEapi-employee-token">Logout</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -441,20 +441,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="authentication-POSTapi-emploie-token">Login</h2>
+                    <h2 id="authentication-POSTapi-employee-token">Login</h2>
 
 <p>
 </p>
 
-<p>Authenticates the emploie and returns a user's API token.</p>
+<p>Authenticates the employee and returns a user's API token.</p>
 
-<span id="example-requests-POSTapi-emploie-token">
+<span id="example-requests-POSTapi-employee-token">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/emploie/token" \
+    "http://localhost:8000/api/employee/token" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -466,7 +466,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/emploie/token"
+    "http://localhost:8000/api/employee/token"
 );
 
 const headers = {
@@ -487,7 +487,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-POSTapi-emploie-token">
+<span id="example-responses-POSTapi-employee-token">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
@@ -502,43 +502,43 @@ fetch(url, {
 }</code>
  </pre>
     </span>
-<span id="execution-results-POSTapi-emploie-token" hidden>
+<span id="execution-results-POSTapi-employee-token" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-POSTapi-emploie-token"></span>:
+                id="execution-response-status-POSTapi-employee-token"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-emploie-token"
+    <pre class="json"><code id="execution-response-content-POSTapi-employee-token"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTapi-emploie-token" hidden>
+<span id="execution-error-POSTapi-employee-token" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-emploie-token">
+    <pre><code id="execution-error-message-POSTapi-employee-token">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-POSTapi-emploie-token" data-method="POST"
-      data-path="api/emploie/token"
+<form id="form-POSTapi-employee-token" data-method="POST"
+      data-path="api/employee/token"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-emploie-token', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-employee-token', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-emploie-token"
-                    onclick="tryItOut('POSTapi-emploie-token');">Try it out ⚡
+                    id="btn-tryout-POSTapi-employee-token"
+                    onclick="tryItOut('POSTapi-employee-token');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-emploie-token"
-                    onclick="cancelTryOut('POSTapi-emploie-token');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTapi-employee-token"
+                    onclick="cancelTryOut('POSTapi-employee-token');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-emploie-token"
+                    id="btn-executetryout-POSTapi-employee-token"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -546,7 +546,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-black">POST</small>
-            <b><code>api/emploie/token</code></b>
+            <b><code>api/employee/token</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -554,7 +554,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-emploie-token"
+                              name="Content-Type"                data-endpoint="POSTapi-employee-token"
                value="application/json"
                data-component="header">
     <br>
@@ -565,7 +565,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-emploie-token"
+                              name="Accept"                data-endpoint="POSTapi-employee-token"
                value="application/json"
                data-component="header">
     <br>
@@ -577,7 +577,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="email"                data-endpoint="POSTapi-emploie-token"
+                              name="email"                data-endpoint="POSTapi-employee-token"
                value="gbailey@example.net"
                data-component="body">
     <br>
@@ -588,7 +588,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="password"                data-endpoint="POSTapi-emploie-token"
+                              name="password"                data-endpoint="POSTapi-employee-token"
                value="+-0pBNvYgxwmi/#iw"
                data-component="body">
     <br>
@@ -596,7 +596,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="authentication-DELETEapi-emploie-token">Logout</h2>
+                    <h2 id="authentication-DELETEapi-employee-token">Logout</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -604,13 +604,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <p>destroy's the API token.</p>
 
-<span id="example-requests-DELETEapi-emploie-token">
+<span id="example-requests-DELETEapi-employee-token">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/api/emploie/token" \
+    "http://localhost:8000/api/employee/token" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -618,7 +618,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/emploie/token"
+    "http://localhost:8000/api/employee/token"
 );
 
 const headers = {
@@ -634,7 +634,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-DELETEapi-emploie-token">
+<span id="example-responses-DELETEapi-employee-token">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
@@ -643,43 +643,43 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{}</code>
  </pre>
     </span>
-<span id="execution-results-DELETEapi-emploie-token" hidden>
+<span id="execution-results-DELETEapi-employee-token" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-DELETEapi-emploie-token"></span>:
+                id="execution-response-status-DELETEapi-employee-token"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-DELETEapi-emploie-token"
+    <pre class="json"><code id="execution-response-content-DELETEapi-employee-token"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-DELETEapi-emploie-token" hidden>
+<span id="execution-error-DELETEapi-employee-token" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-DELETEapi-emploie-token">
+    <pre><code id="execution-error-message-DELETEapi-employee-token">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-DELETEapi-emploie-token" data-method="DELETE"
-      data-path="api/emploie/token"
+<form id="form-DELETEapi-employee-token" data-method="DELETE"
+      data-path="api/employee/token"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-emploie-token', this);">
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-employee-token', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-DELETEapi-emploie-token"
-                    onclick="tryItOut('DELETEapi-emploie-token');">Try it out ⚡
+                    id="btn-tryout-DELETEapi-employee-token"
+                    onclick="tryItOut('DELETEapi-employee-token');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-DELETEapi-emploie-token"
-                    onclick="cancelTryOut('DELETEapi-emploie-token');" hidden>Cancel 🛑
+                    id="btn-canceltryout-DELETEapi-employee-token"
+                    onclick="cancelTryOut('DELETEapi-employee-token');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-DELETEapi-emploie-token"
+                    id="btn-executetryout-DELETEapi-employee-token"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -687,7 +687,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-red">DELETE</small>
-            <b><code>api/emploie/token</code></b>
+            <b><code>api/employee/token</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -695,7 +695,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-emploie-token"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-employee-token"
                value="Bearer {YOUR_AUTH_KEY}"
                data-component="header">
     <br>
@@ -706,7 +706,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="DELETEapi-emploie-token"
+                              name="Content-Type"                data-endpoint="DELETEapi-employee-token"
                value="application/json"
                data-component="header">
     <br>
@@ -717,7 +717,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="DELETEapi-emploie-token"
+                              name="Accept"                data-endpoint="DELETEapi-employee-token"
                value="application/json"
                data-component="header">
     <br>

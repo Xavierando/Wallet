@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,7 +17,7 @@ it('should filter by client id', function () {
 
     Sanctum::actingAs(
 
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
 
         [Abilities::ShowWallet]
 
@@ -49,7 +49,7 @@ it('should filter by amount range', function () {
 
     Sanctum::actingAs(
 
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
 
         [Abilities::ShowWallet]
 
@@ -72,7 +72,7 @@ it('should filter by amount', function () {
 
     Sanctum::actingAs(
 
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
 
         [Abilities::ShowWallet]
 
@@ -94,7 +94,7 @@ it('should filter by title', function () {
     $count = Wallet::where('title', $wallet->title)->count();
 
     Sanctum::actingAs(
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
         [Abilities::ShowWallet]
     );
 
@@ -115,7 +115,7 @@ it('should filter by updateAt', function () {
     $count = Wallet::whereDate('updated_at', $filterDate)->count();
 
     Sanctum::actingAs(
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
         [Abilities::ShowWallet]
     );
 
@@ -142,7 +142,7 @@ it('should filter by updateAt range', function () {
     )->count();
 
     Sanctum::actingAs(
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
         [Abilities::ShowWallet]
     );
 
@@ -182,7 +182,7 @@ it('should filter by createdAt range', function () {
     )->count();
 
     Sanctum::actingAs(
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
         [Abilities::ShowWallet]
     );
 

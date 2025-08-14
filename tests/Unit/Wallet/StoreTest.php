@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Permissions\V1\Abilities;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -76,13 +76,13 @@ it('can not store a new wallet as a client with a different id', function () {
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('store a new wallet for a client as Emploie', function () {
-    $emploie = Emploie::Factory()->create();
+it('store a new wallet for a client as Employee', function () {
+    $employee = Employee::Factory()->create();
     $client = Client::Factory()->create();
 
     Sanctum::actingAs(
 
-        $emploie,
+        $employee,
 
         [Abilities::CreateWallet]
 
@@ -111,13 +111,13 @@ it('store a new wallet for a client as Emploie', function () {
         ->assertJsonPath('data.relationships.client.data.id', $client->id);
 });
 
-it('can not store a new wallet for a client as Emploie', function () {
-    $emploie = Emploie::Factory()->create();
+it('can not store a new wallet for a client as Employee', function () {
+    $employee = Employee::Factory()->create();
     $client = Client::Factory()->create();
 
     Sanctum::actingAs(
 
-        $emploie,
+        $employee,
 
         []
 

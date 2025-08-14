@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
@@ -54,15 +54,15 @@ it('do not have visibility on transactions on not own wallets as a client', func
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('do not have visibility on transactions  on wallets as a emploie without authorization', function () {
-    $emploie = Emploie::Factory()->create();
+it('do not have visibility on transactions  on wallets as a employee without authorization', function () {
+    $employee = Employee::Factory()->create();
     Wallet::factory()->count(100)->create();
     $wallet = Wallet::Factory()->create();
     Transaction::Factory()->count(5)->create(['from' => $wallet->id]);
 
     Sanctum::actingAs(
 
-        $emploie,
+        $employee,
 
         []
 
@@ -77,15 +77,15 @@ it('do not have visibility on transactions  on wallets as a emploie without auth
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('have visibility on transactions on wallets as a emploie with authorization', function () {
-    $emploie = Emploie::Factory()->create();
+it('have visibility on transactions on wallets as a employee with authorization', function () {
+    $employee = Employee::Factory()->create();
     Wallet::factory()->count(100)->create();
     $wallet = Wallet::Factory()->create();
     Transaction::Factory()->count(10)->create(['from' => $wallet->id]);
 
     Sanctum::actingAs(
 
-        $emploie,
+        $employee,
 
         [Abilities::ShowTransaction]
 

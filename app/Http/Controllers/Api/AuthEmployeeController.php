@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\LoginRequest;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Traits\ApiResponses;
 
-class AuthEmploieController extends AuthController
+class AuthEmployeeController extends AuthController
 {
     use ApiResponses;
 
     /**
      * Login
      *
-     * Authenticates the emploie and returns a user's API token.
+     * Authenticates the employee and returns a user's API token.
      *
      * @unauthenticated
      *
@@ -23,6 +23,6 @@ class AuthEmploieController extends AuthController
      */
     public function getToken(LoginRequest $request)
     {
-        return $this->getUserToken($request, Emploie::firstWhere('email', $request->safe()->email));
+        return $this->getUserToken($request, Employee::firstWhere('email', $request->safe()->email));
     }
 }

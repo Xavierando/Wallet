@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use Laravel\Sanctum\Sanctum;
 
 it('should authenticate a client', function () {
@@ -36,13 +36,13 @@ it('should destroy a client token', function () {
         ->assertJsonPath('message', 'token destroyed');
 });
 
-it('should authenticate a emploie', function () {
-    $emploie = Emploie::Factory()->create();
+it('should authenticate a employee', function () {
+    $employee = Employee::Factory()->create();
 
     $response = $this
         ->postJson(
-            route('api.emploie.login'),
-            ['email' => $emploie->email, 'password' => 'password']
+            route('api.employee.login'),
+            ['email' => $employee->email, 'password' => 'password']
         );
 
     $response
@@ -50,17 +50,17 @@ it('should authenticate a emploie', function () {
         ->assertJsonPath('message', 'Authenticated');
 });
 
-it('should destroy a emploie token', function () {
-    $emploie = Emploie::Factory()->create();
+it('should destroy a employee token', function () {
+    $employee = Employee::Factory()->create();
 
     Sanctum::actingAs(
-        $emploie,
+        $employee,
         []
     );
 
     $response = $this
         ->deleteJson(
-            route('api.emploie.logout')
+            route('api.employee.logout')
         );
 
     $response
@@ -69,12 +69,12 @@ it('should destroy a emploie token', function () {
 });
 
 it('should not authenticate an invalid credential', function () {
-    $emploie = Emploie::Factory()->create();
+    $employee = Employee::Factory()->create();
 
     $response = $this
         ->postJson(
-            route('api.emploie.login'),
-            ['email' => $emploie->email.'m', 'password' => 'password']
+            route('api.employee.login'),
+            ['email' => $employee->email.'m', 'password' => 'password']
         );
 
     $response

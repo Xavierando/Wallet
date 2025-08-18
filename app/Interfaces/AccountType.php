@@ -3,9 +3,9 @@
 namespace App\Interfaces;
 
 use App\Enum\ClientTiers;
-use App\Enum\EmploiePositions;
+use App\Enum\EmployeePositions;
 
 interface AccountType
 {
-    public ClientTiers|EmploiePositions $accountType { get; }
+    public ClientTiers|EmployeePositions $accountType { get; }
 }

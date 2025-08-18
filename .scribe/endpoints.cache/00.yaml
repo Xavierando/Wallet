@@ -104,14 +104,14 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/emploie/token
+    uri: api/employee/token
     metadata:
       groupName: Authentication
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
       title: Login
-      description: "Authenticates the emploie and returns a user's API token."
+      description: "Authenticates the employee and returns a user's API token."
       authenticated: false
       custom: []
     headers:
@@ -162,7 +162,7 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: api/emploie/token
+    uri: api/employee/token
     metadata:
       groupName: Authentication
       groupDescription: ''

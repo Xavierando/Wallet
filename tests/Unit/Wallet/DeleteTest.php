@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -62,12 +62,12 @@ it('can not delete a not own wallet as a client', function () {
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('can delete a not own wallet as a emploie', function () {
-    $emploie = Emploie::Factory()->create();
+it('can delete a not own wallet as a employee', function () {
+    $employee = Employee::Factory()->create();
     $wallet = Wallet::Factory()->create(['amount' => 0]);
 
     Sanctum::actingAs(
-        $emploie,
+        $employee,
         [Abilities::DeleteWallet]
     );
 
@@ -79,12 +79,12 @@ it('can delete a not own wallet as a emploie', function () {
         ->assertJsonPath('message', 'wallet deleted');
 });
 
-it('can not delete a not own wallet as a emploie without permission', function () {
-    $emploie = Emploie::Factory()->create();
+it('can not delete a not own wallet as a employee without permission', function () {
+    $employee = Employee::Factory()->create();
     $wallet = Wallet::Factory()->create(['amount' => 0]);
 
     Sanctum::actingAs(
-        $emploie,
+        $employee,
         []
     );
 
@@ -115,12 +115,12 @@ it('can not delete a wallet with a non-zero amount as a client', function () {
         ->assertJsonPath('errors.message', 'Can\'t delete a wallet with a non-zero amount');
 });
 
-it('can not delete a wallet with a non-zero amount as a emploie', function () {
-    $emploie = Emploie::Factory()->create();
+it('can not delete a wallet with a non-zero amount as a employee', function () {
+    $employee = Employee::Factory()->create();
     $wallet = Wallet::Factory()->create(['amount' => 10000]);
 
     Sanctum::actingAs(
-        $emploie,
+        $employee,
         [Abilities::DeleteWallet]
     );
 

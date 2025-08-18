@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -59,13 +59,13 @@ it('do not have visibility on not own wallets as a client', function () {
         ->assertJsonPath('data', []);
 });
 
-it('do not have visibility on wallets as a emploie without authorization', function () {
-    $emploie = Emploie::Factory()->create();
+it('do not have visibility on wallets as a employee without authorization', function () {
+    $employee = Employee::Factory()->create();
     Wallet::factory()->count(10)->create();
 
     Sanctum::actingAs(
 
-        $emploie,
+        $employee,
 
         []
 
@@ -80,13 +80,13 @@ it('do not have visibility on wallets as a emploie without authorization', funct
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('have visibility on wallets as a emploie with authorization', function () {
-    $emploie = Emploie::Factory()->create();
+it('have visibility on wallets as a employee with authorization', function () {
+    $employee = Employee::Factory()->create();
     Wallet::factory()->count(10)->create();
 
     Sanctum::actingAs(
 
-        $emploie,
+        $employee,
 
         [Abilities::ShowWallet]
 

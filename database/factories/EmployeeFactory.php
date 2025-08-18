@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Enum\EmploiePositions;
+use App\Enum\EmployeePositions;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Emploie>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
  */
-class EmploieFactory extends Factory
+class EmployeeFactory extends Factory
 {
     /**
      * The current password being used by the factory.
@@ -29,7 +29,7 @@ class EmploieFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'position' => fake()->randomElement(EmploiePositions::class),
+            'position' => fake()->randomElement(EmployeePositions::class),
             'remember_token' => Str::random(10),
         ];
     }

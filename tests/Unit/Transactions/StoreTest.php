@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Client;
-use App\Models\Emploie;
+use App\Models\Employee;
 use App\Models\Wallet;
 use App\Permissions\V1\Abilities;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -77,7 +77,7 @@ it('can not store a new wallet as a client with a different id', function () {
         ->assertJsonPath('errors.message', 'Unauthorized');
 });
 
-it('store a new wallet for a client as Emploie', function () {
+it('store a new wallet for a client as Employee', function () {
     $client = Client::Factory()->create();
     $walletFrom = Wallet::Factory()->create(['client_id' => $client->id]);
     $walletTo = Wallet::Factory()->create();
@@ -87,7 +87,7 @@ it('store a new wallet for a client as Emploie', function () {
     $amountTo = $walletTo->amount;
 
     Sanctum::actingAs(
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
         [Abilities::CreateTransaction]
     );
 
@@ -114,7 +114,7 @@ it('store a new wallet for a client as Emploie', function () {
     expect($walletTo->amount)->toBe($amountTo + $amount * 100);
 });
 
-it('can not store a new wallet for a client as Emploie', function () {
+it('can not store a new wallet for a client as Employee', function () {
     $client = Client::Factory()->create();
     $walletFrom = Wallet::Factory()->create(['client_id' => $client->id]);
     $walletTo = Wallet::Factory()->create();
@@ -124,7 +124,7 @@ it('can not store a new wallet for a client as Emploie', function () {
     $amountTo = $walletTo->amount;
 
     Sanctum::actingAs(
-        Emploie::Factory()->create(),
+        Employee::Factory()->create(),
         []
     );
 

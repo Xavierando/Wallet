@@ -13,7 +13,7 @@ Portafolio project for a simple restFull API Featuring:
 - 2 Authentication endpoint for Clients and Employees
 - different Tiers of Clients and Employees Authorization
 - filter and sort 
-- API documentation at /docs 
+- API documentation at /docs endpoint 
 - Test suits
 
 ## License
